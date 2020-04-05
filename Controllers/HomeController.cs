@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dev_Blog.ViewModels;
+using Dev_Blog.Data;
 
 namespace Dev_Blog.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly BlogDBContext context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BlogDBContext context)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.context = context;
         }
 
         public IActionResult Index()
