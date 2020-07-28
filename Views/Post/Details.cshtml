@@ -1,0 +1,22 @@
+﻿@model Dev_Blog.Models.Post
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="_PostPartial" model="Model" />
+<h3>Comments (@Model.Comments.Where(c => !c.Deleted).Count()):</h3>
+<div class="comments">
+    @if (Model.Comments.Any())
+    {
+        <partial name="~/Views/Comment/_Comments.cshtml" model="Model.Comments.Where(c => c.ParentComment == null && !c.Deleted)" />
+    }
+</div>
+
+@section Scripts {
+<script>const siteKey = "@ViewData["recaptcha-public-key"]";</script>
+    <environment include="Development">
+        <script src="~/js/post.js" asp-append-version="true"></script>
+    </environment>
+}

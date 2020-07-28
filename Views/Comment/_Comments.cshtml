@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Dev_Blog.Models.Comment>
+
+@foreach (var comment in Model)
+{
+    <partial name="~/Views/Comment/_Comment.cshtml" model="comment"/>
+    @if (comment.Comments.Any())
+    {
+        <div class="comment-children">
+            <partial name="~/Views/Comment/_Comments.cshtml" model="comment.Comments"/>
+        </div>
+    }
+}

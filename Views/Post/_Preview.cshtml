@@ -1,0 +1,43 @@
+﻿@model Dev_Blog.Models.Post
+@using Dev_Blog.Utils;
+
+<div class="preview">
+    <div class="row">
+        <div class="col-2">
+            <div class="thumbnail-container">
+                @if (Model.ThumbnailPath != null)
+                {
+                    <div>
+                        <a href="/post/@Model.Stub">
+                            <img src="@Model.ThumbnailPath" alt="Thumbnail" title="@Model.Title" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <a class="col" href="/post/@Model.Stub">
+                    <h2>@Model.Title</h2>
+                </a>
+            </div>
+            <div class="row">
+                <h4 class="col-6">Written by @Model.Author.DisplayName</h4>
+                <h4 class="col-6">Posted on @Model.DatePublished.Value.ToLongDateString()</h4>
+            </div>
+            <div class="row">
+                <div class="tags col">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a href="/tag/@tag.TagID" class="tag">#@tag.TagID</a>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>Views: </b> @NumberFormat.GetShortenedNumber(Model.Views)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

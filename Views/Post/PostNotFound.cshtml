@@ -1,0 +1,13 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Post not found";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Post not found</h1>
+<div class="alert alert-danger" role="alert">
+    <p>The post @Model was not found.</p>
+    <p>It might have been deleted, or it never existed in the first place</p>
+    <a class="alert-link" asp-action="Index">Back to main page</a>
+</div>

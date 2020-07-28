@@ -1,0 +1,48 @@
+﻿@model Dev_Blog.Models.Comment
+
+@if (Model.Deleted && !Model.AreAllChildrenDeleted) //We exclude comments that only contain deleted children
+{
+    <div class="comment">
+        <div class="row">
+            <em>This comment was deleted</em>
+        </div>
+    </div>
+}
+else if (!Model.Deleted)
+{
+    <div class="comment" id="comment-@Model.ID">
+
+        <div class="row">
+            <div class="col-11">
+                <b>@Html.DisplayNameFor(model => model.Name)</b> :
+                @if(Model.Author != null)
+                {
+                    @Html.DisplayFor(model => model.Author.DisplayName) <span title="Verified" class="verified">&#9989;</span>
+                    
+                } else
+                {
+                    @Html.DisplayFor(model => model.Name)
+                }
+            </div>
+            <div class="col-1">
+                @if (User.IsInRole("Admin") || Model.Post.Author.UserName == User.Identity.Name)
+                {
+                    <form asp-action="Delete" asp-controller="Comment">
+                        <input hidden name="id" value="@Model.ID" />
+                        <button type="submit">X</button>
+                    </form>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="comment-content">@Html.DisplayFor(model => model.Content)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary reply">Reply</button>
+            </div>
+        </div>
+    </div>
+}

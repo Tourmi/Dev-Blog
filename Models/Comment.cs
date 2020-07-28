@@ -9,6 +9,11 @@ namespace Dev_Blog.Models
 {
     public class Comment
     {
+        public Comment()
+        {
+            Comments = new HashSet<Comment>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
@@ -29,9 +34,9 @@ namespace Dev_Blog.Models
         public DateTime? DateModified { get; set; }
         public DateTime? DateDeleted { get; set; }
 
-        public long? UserID { get; set; }
+        public string UserID { get; set; }
         [ForeignKey("UserID")]
-        public User User { get; set; }
+        public User Author { get; set; }
 
         public long PostID { get; set; }
         [ForeignKey("PostID")]
@@ -41,6 +46,22 @@ namespace Dev_Blog.Models
         [ForeignKey("ParentCommentID")]
         public Comment ParentComment { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+
+        [NotMapped]
+        public bool Deleted => DateDeleted != null || (ParentComment != null && ParentComment.Deleted);
+        [NotMapped]
+        public bool AreAllChildrenDeleted
+        {
+            get
+            {
+                if (!Comments.Any())
+                {
+                    return true;
+                }
+
+                return !Comments.Where(c => !c.Deleted || !c.AreAllChildrenDeleted).Any();
+            }
+        }
     }
 }

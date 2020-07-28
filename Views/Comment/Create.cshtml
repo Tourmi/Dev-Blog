@@ -1,0 +1,33 @@
+﻿@model Dev_Blog.ViewModels.CommentViewModel
+
+<div id="replyDiv" class="row @(Model.CommentID != null ? "reply-comment" : "")">
+    <div class="col-md-4">
+        <form asp-action="Create" id="replyForm">
+            <input asp-for="PostID" value="@Model.PostID" />
+            <input asp-for="ReCaptchaResponse" />
+            @if (Model.CommentID != null)
+            {
+                <input asp-for="CommentID" value="@Model.CommentID" />
+            }
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" @(User.Identity.IsAuthenticated ? "style=display:none;" : "")>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group" @(User.Identity.IsAuthenticated ? "style=display:none;" : "")>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary recaptcha">Comment</button>
+            </div>
+        </form>
+    </div>
+</div>

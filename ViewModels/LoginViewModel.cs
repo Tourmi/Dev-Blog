@@ -10,10 +10,12 @@ namespace Dev_Blog.ViewModels
     public class LoginViewModel
     {
         [Required]
-        [DisplayName("User name")]
+        [DisplayName("Username")]
         public string Username { get; set; }
         [Required]
+        [DisplayName("Password")]
         public string Password { get; set; }
+        [DisplayName("Remember me")]
         public bool RememberMe { get; set; }
     }
 }

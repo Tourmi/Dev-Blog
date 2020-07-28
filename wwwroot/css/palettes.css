@@ -1,0 +1,16 @@
+﻿:root {
+    --bg-color: #D2FDFF;
+    --body-bg-color: #F2FDFF;
+    --text-color: #092327;
+    --main-color: #1B9AAA;
+    --accent-color: #FF934f;
+    --accent2-color: #96e6b3;
+}
+
+.palette1 {
+    --bg-color: #D2FDFF;
+    --text-color: #092327;
+    --main-color: #1B9AAA;
+    --accent-color: #FF934f;
+    --accent2-color: #96e6b3;
+}
