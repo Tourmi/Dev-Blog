@@ -28,6 +28,7 @@ namespace Dev_Blog.Controllers
         [HttpGet("/login")]
         public ActionResult LogIn(string returnUrl = null)
         {
+            logger.LogTrace("GET: Login, LogIn");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -35,6 +36,7 @@ namespace Dev_Blog.Controllers
         [HttpPost("/login")]
         public async Task<IActionResult> LogIn(LoginViewModel loginViewModel, string returnUrl = null)
         {
+            logger.LogTrace("POST: Login, LogIn");
             returnUrl ??= Url.Content("~/");
 
             if (!ModelState.IsValid)
@@ -44,6 +46,7 @@ namespace Dev_Blog.Controllers
             var result = await signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, loginViewModel.RememberMe, true);
             if (result.Succeeded)
             {
+                logger.LogInformation("Successful log in for user {Username}", loginViewModel.Username);
                 return LocalRedirect(returnUrl);
             }
 
@@ -51,10 +54,12 @@ namespace Dev_Blog.Controllers
 
             if (result.IsLockedOut)
             {
+                logger.LogWarning("Attempt to log into locked account {Username} with ip {IP}", loginViewModel.Username, HttpContext.Connection.RemoteIpAddress.ToString());
                 ModelState.AddModelError("", "Too many attempts, please try again in a few minutes.");
                 return View(loginViewModel);
             }
 
+            logger.LogWarning("Invalid login attempt for username {Username} and ip {IP}", loginViewModel.Username, HttpContext.Connection.RemoteIpAddress.ToString());
             ModelState.AddModelError("", "Invalid username or password!");
             return View(loginViewModel);
         }
@@ -62,6 +67,7 @@ namespace Dev_Blog.Controllers
         [HttpPost("/logout")]
         public async Task<IActionResult> LogOut(string returnUrl = null)
         {
+            logger.LogTrace("POST: Login, LogOut");
             returnUrl ??= Url.Content("~/");
             await signInManager.SignOutAsync();
 

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using reCAPTCHA.AspNetCore.Attributes;
 
@@ -20,19 +21,23 @@ namespace Dev_Blog.Controllers
 {
     public class CommentController : Controller
     {
-        private UserManager<User> userManager;
-        private BlogDBContext context;
-        private IOptions<ReCaptchaConfig> reCaptchaConfig;
+        private readonly ILogger<CommentController> logger;
+        private readonly UserManager<User> userManager;
+        private readonly BlogDBContext context;
+        private readonly IOptions<ReCaptchaConfig> reCaptchaConfig;
 
-        public CommentController(UserManager<User> userManager, BlogDBContext context, IOptions<ReCaptchaConfig> reCaptchaConfig)
+        public CommentController(UserManager<User> userManager, BlogDBContext context, IOptions<ReCaptchaConfig> reCaptchaConfig, ILogger<CommentController> logger)
         {
             this.userManager = userManager;
             this.context = context;
             this.reCaptchaConfig = reCaptchaConfig;
+            this.logger = logger;
         }
 
+        [HttpGet]
         public async Task<ActionResult> Create(long postID, long? commentID)
         {
+            logger.LogTrace("GET: Comment, Create");
             var userTask = User.Identity.IsAuthenticated ? userManager.GetUserAsync(HttpContext.User) : null;
 
             CommentViewModel commentViewModel = new CommentViewModel
@@ -68,6 +73,7 @@ namespace Dev_Blog.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CommentViewModel viewModel)
         {
+            logger.LogTrace("POST: Comment, Create");
             if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, viewModel.ReCaptchaResponse))
             {
                 ModelState.AddModelError("", "The reCAPTCHA was invalid!");
@@ -127,6 +133,7 @@ namespace Dev_Blog.Controllers
         [Authorize(Roles = "Admin, Author")]
         public ActionResult Delete(long id)
         {
+            logger.LogTrace("POST: Comment, Delete");
             Comment comment = context.Comments.Include(c => c.Post).Where(c => c.ID == id).SingleOrDefault();
             if (comment == null)
             {
@@ -145,6 +152,7 @@ namespace Dev_Blog.Controllers
 
             context.SaveChanges();
 
+            logger.LogInformation("Comment {ID} was deleted by user {User}", comment.ID, User.Identity.Name);
             return Redirect("/post/" + comment.Post.Stub);
         }
     }

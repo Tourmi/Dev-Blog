@@ -35,6 +35,7 @@ namespace Dev_Blog.Controllers
         [Route("Post")]
         public async Task<IActionResult> Index(string tags, string author, int? currPage)
         {
+            logger.LogTrace("GET: Post, Index");
             const int postsPerPage = 20;
             IQueryable<Post> posts = getValidPosts()
                 .Include(p => p.Author)
@@ -75,6 +76,7 @@ namespace Dev_Blog.Controllers
         [Route("Post/{postStub}")]
         public async Task<IActionResult> Details(string postStub)
         {
+            logger.LogTrace("GET: Post, Details, {stub}", postStub);
             postStub = postStub.ToLower();
 
             ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
@@ -95,8 +97,6 @@ namespace Dev_Blog.Controllers
 
             return View(post);
         }
-
-
 
         /// <summary>
         /// Returns the PostNotFound view with a 404 error code.
