@@ -37,7 +37,7 @@ namespace Dev_Blog.Controllers
         [HttpGet]
         public async Task<ActionResult> Create(long postID, long? commentID)
         {
-            logger.LogTrace("GET: Comment, Create");
+            logger.LogTrace("GET: Comment, Create, postID = {postID}, commentID = {commentID}", postID, commentID);
             var userTask = User.Identity.IsAuthenticated ? userManager.GetUserAsync(HttpContext.User) : null;
 
             CommentViewModel commentViewModel = new CommentViewModel
@@ -133,7 +133,7 @@ namespace Dev_Blog.Controllers
         [Authorize(Roles = "Admin, Author")]
         public ActionResult Delete(long id)
         {
-            logger.LogTrace("POST: Comment, Delete");
+            logger.LogTrace("POST: Comment, Delete, id = {id}", id);
             Comment comment = context.Comments.Include(c => c.Post).Where(c => c.ID == id).SingleOrDefault();
             if (comment == null)
             {

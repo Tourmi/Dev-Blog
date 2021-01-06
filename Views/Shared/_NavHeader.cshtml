@@ -7,6 +7,12 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
             <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-action="Index" asp-controller="About" title="About">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-action="Index" asp-controller="Post" title="Blog">Blog</a>
+                </li>
                 <partial name="~/Views/PostAdmin/_NavPartial.cshtml" />
                 <partial name="~/Views/Login/_NavPartial.cshtml" />
             </ul>

@@ -7,18 +7,20 @@ using Dev_Blog.Data;
 using Dev_Blog.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Dev_Blog.Controllers
 {
     public class TagController : Controller
     {
-
+        private readonly ILogger<TagController> logger;
         private readonly BlogDBContext context;
 
-        public TagController(BlogDBContext context)
+        public TagController(BlogDBContext context, ILogger<TagController> logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -26,8 +28,10 @@ namespace Dev_Blog.Controllers
         /// </summary>
         /// <param name="term"></param>
         /// <returns></returns>
+        [Route("search")]
         public string Search(string term, bool allowNewTags = true)
         {
+            logger.LogTrace("GET: Tag, Search, term = {term}, allowNewTags = {allowNewTags}", term, allowNewTags);
             term = term?.ToLower()?.Trim()?.Trim('-') ?? "";
             term = Regex.Replace(term, @"\s", "-");
 

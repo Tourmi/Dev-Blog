@@ -49,7 +49,7 @@ namespace Dev_Blog.Controllers
         [HttpGet]
         public ActionResult Details(long id)
         {
-            logger.LogTrace("GET: PostAdmin, Details, {id}", id);
+            logger.LogTrace("GET: PostAdmin, Details, id = {id}", id);
             Post post = getAllowedPost(id);
 
             if (post == null)
@@ -137,7 +137,7 @@ namespace Dev_Blog.Controllers
         [HttpGet]
         public ActionResult Edit(long id)
         {
-            logger.LogTrace("GET: PostAdmin, Edit, {id}", id);
+            logger.LogTrace("GET: PostAdmin, Edit, id = {id}", id);
             Post post = getAllowedPost(id);
 
             if (post == null)
@@ -166,7 +166,7 @@ namespace Dev_Blog.Controllers
         [HttpPost]
         public ActionResult Edit(long id, PostViewModel viewModel)
         {
-            logger.LogTrace("GET: PostAdmin, Edit, {id}", id);
+            logger.LogTrace("GET: PostAdmin, Edit, id = {id}", id);
             if (viewModel.ID != id)
             {
                 return postNotFound(id);
@@ -238,7 +238,7 @@ namespace Dev_Blog.Controllers
         [HttpGet]
         public ActionResult Delete(long id)
         {
-            logger.LogTrace("GET: PostAdmin, Delete, {id}", id);
+            logger.LogTrace("GET: PostAdmin, Delete, id = {id}", id);
             Post post = getAllowedPost(id);
 
             if (post == null)
@@ -253,7 +253,7 @@ namespace Dev_Blog.Controllers
         [HttpPost]
         public ActionResult Delete(long id, Post post)
         {
-            logger.LogTrace("POST: PostAdmin, Delete, {id}", id);
+            logger.LogTrace("POST: PostAdmin, Delete, id = {id}", id);
             if (post.ID != id)
             {
                 ModelState.AddModelError("", "Wrong ID");

@@ -31,11 +31,11 @@ namespace Dev_Blog.Controllers
             this.reCaptchaConfig = reCaptchaConfig;
         }
 
-        [Route("")]
-        [Route("Post")]
+        [Route("", Name = "Index", Order = 0)]
+        [Route("post", Name = "Post", Order = 1)]
         public async Task<IActionResult> Index(string tags, string author, int? currPage)
         {
-            logger.LogTrace("GET: Post, Index");
+            logger.LogTrace("GET: Post, Index, tags = {tags}, author = {author}, currPage = {currPage}", tags, author, currPage);
             const int postsPerPage = 20;
             IQueryable<Post> posts = getValidPosts()
                 .Include(p => p.Author)
@@ -73,10 +73,10 @@ namespace Dev_Blog.Controllers
             return View(result);
         }
 
-        [Route("Post/{postStub}")]
+        [Route("post/{postStub}")]
         public async Task<IActionResult> Details(string postStub)
         {
-            logger.LogTrace("GET: Post, Details, {stub}", postStub);
+            logger.LogTrace("GET: Post, Details, postStub = {stub}", postStub);
             postStub = postStub.ToLower();
 
             ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;

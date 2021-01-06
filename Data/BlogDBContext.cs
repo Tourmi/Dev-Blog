@@ -13,6 +13,7 @@ namespace Dev_Blog.Data
     {
         public override DbSet<User> Users { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<BlogFile> PostFiles { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<PostTag> PostTags { get; set; }

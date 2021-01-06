@@ -1,6 +1,13 @@
 ﻿@model Dev_Blog.Models.Post
 @using Dev_Blog.Utils;
 
+@{
+    var linkParams = new Dictionary<string, string>
+    {
+        {"postStub", Model.Stub }
+    };
+}
+
 <div class="preview">
     <div class="row">
         <div class="col-2">
@@ -8,7 +15,7 @@
                 @if (Model.ThumbnailPath != null)
                 {
                     <div>
-                        <a href="/post/@Model.Stub">
+                        <a asp-action="Details" asp-controller="Post" asp-all-route-data="linkParams">
                             <img src="@Model.ThumbnailPath" alt="Thumbnail" title="@Model.Title" />
                         </a>
                     </div>
@@ -29,7 +36,7 @@
                 <div class="tags col">
                     @foreach (var tag in Model.Tags)
                     {
-                        <a href="/tag/@tag.TagID" class="tag">#@tag.TagID</a>
+                        <a href="/?tags=@tag.TagID" class="tag">#@tag.TagID</a>
                     }
                 </div>
             </div>
