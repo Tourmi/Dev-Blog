@@ -19,7 +19,7 @@
         <div class="tags">
             @foreach (var tag in Model.Tags)
             {
-                <a href="/tag/@tag.TagID" class="tag">#@tag.TagID</a>
+                <a asp-action="Index" asp-controller="Post" asp-route-tags="@tag.TagID" class="tag">#@tag.TagID</a>
             }
         </div>
     </footer>
