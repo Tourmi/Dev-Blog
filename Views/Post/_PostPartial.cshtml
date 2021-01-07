@@ -6,10 +6,10 @@
 <article class="post-article">
     <header>
         <h1>@Html.DisplayFor(model => model.Title)</h1>
-        <address>Posted by @Model.Author.DisplayName on @Model.DatePublished.Value.Year/@Model.DatePublished.Value.Month/@Model.DatePublished.Value.Day</address>
+        <p>Posted by @Model.Author.DisplayName on @Model.DatePublished.Value.Year/@Model.DatePublished.Value.Month/@Model.DatePublished.Value.Day</p>
         @if (@Model.DateModified != null)
         {
-            <h2>Last modified on @Model.DateModified.Value.Year/@Model.DateModified.Value.Month/@Model.DateModified.Value.Day</h2>
+            <p>Last modified on @Model.DateModified.Value.Year/@Model.DateModified.Value.Month/@Model.DateModified.Value.Day</p>
         }
     </header>
     <div class="post" id="@Model.ID">

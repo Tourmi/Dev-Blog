@@ -68,8 +68,8 @@ namespace Dev_Blog
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromDays(5);
                 options.SlidingExpiration = true;
-                options.LoginPath = "/Login";
-                options.LogoutPath = "/Logout";
+                options.LoginPath = "/login";
+                options.LogoutPath = "/logout";
             });
 
             services.AddTransient<IEmailSender, EmailSender>();

@@ -15,7 +15,7 @@ namespace Dev_Blog.ViewModels
 
         [Required]
         [MinLength(3)]
-        [MaxLength(30)]
+        [MaxLength(20)]
         [RegularExpression(@"^[-_a-zA-Z0-9]+$", ErrorMessage = "The name should only contain alphanumeric characters, dashes and underscores.")]
         public string Name { get; set; }
 

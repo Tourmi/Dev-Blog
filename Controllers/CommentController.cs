@@ -34,6 +34,7 @@ namespace Dev_Blog.Controllers
             this.logger = logger;
         }
 
+        [Route("comment/create")]
         [HttpGet]
         public async Task<ActionResult> Create(long postID, long? commentID)
         {
@@ -69,11 +70,12 @@ namespace Dev_Blog.Controllers
             return PartialView(commentViewModel);
         }
 
-        // POST: Comment/Create
+        [Route("comment/create")]
         [HttpPost]
         public async Task<ActionResult> Create(CommentViewModel viewModel)
         {
             logger.LogTrace("POST: Comment, Create");
+
             if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, viewModel.ReCaptchaResponse))
             {
                 ModelState.AddModelError("", "The reCAPTCHA was invalid!");
@@ -125,10 +127,10 @@ namespace Dev_Blog.Controllers
             context.Add(comment);
             await context.SaveChangesAsync();
 
-            return Redirect("/post/" + parentPost.Stub + "#comment-" + comment.ID);
+            return Redirect(Url.Action("Details", "Post", new { postStub = parentPost.Stub}, null, null, $"comment-{comment.ID}"));
         }
 
-        // POST: Comment/Delete/5
+        [Route("comment/delete/{id}")]
         [HttpPost]
         [Authorize(Roles = "Admin, Author")]
         public ActionResult Delete(long id)

@@ -24,7 +24,7 @@ namespace Dev_Blog.Models
         public string IpAddress { get; set; }
         [Required]
         [MinLength(3)]
-        [MaxLength(25)]
+        [MaxLength(20)]
         public string Name { get; set; }
         [EmailAddress]
         public string Email { get; set; }

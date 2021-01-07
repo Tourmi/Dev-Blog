@@ -35,6 +35,7 @@ namespace Dev_Blog.Controllers
             return View(user);
         }
 
+        [Route("account/change-password")]
         [HttpPost]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel viewModel)
         {
