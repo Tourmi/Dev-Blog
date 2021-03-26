@@ -76,12 +76,6 @@ namespace Dev_Blog.Controllers
         {
             logger.LogTrace("POST: Comment, Create");
 
-            if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, viewModel.ReCaptchaResponse))
-            {
-                ModelState.AddModelError("", "The reCAPTCHA was invalid!");
-                return LocalRedirect(Request.GetEncodedUrl());
-            }
-
             Post parentPost = await context.Posts.FindAsync(viewModel.PostID);
 
             if (parentPost == null || parentPost.Deleted || !parentPost.Published)
@@ -89,8 +83,17 @@ namespace Dev_Blog.Controllers
                 ModelState.AddModelError("", "The post being commented on does not exist.");
             }
 
-            Comment parentComment = null;
+            if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, viewModel.ReCaptchaResponse))
+            {
+                ModelState.AddModelError("", "The reCAPTCHA was invalid!");
+            }
 
+            if (context.Bans.Any(b => (b.EmailAddress == viewModel.Email || b.IpAddress == HttpContext.Connection.RemoteIpAddress.ToString()) && (b.EndDate == null || b.EndDate.Value > DateTime.Now)))
+            {
+                ModelState.AddModelError("", "Impossible to post comments. Your IP address may be blacklisted.");
+            }
+
+            Comment parentComment = null;
             if (viewModel.CommentID != null)
             {
                 parentComment = await context.Comments.FindAsync(viewModel.CommentID);
@@ -101,16 +104,15 @@ namespace Dev_Blog.Controllers
                 }
             }
 
-            User author = null;
-
-            if (User.Identity.IsAuthenticated)
-            {
-                author = await userManager.GetUserAsync(HttpContext.User);
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
+            }
+
+            User author = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                author = await userManager.GetUserAsync(HttpContext.User);
             }
 
             Comment comment = new Comment()

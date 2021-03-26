@@ -16,8 +16,8 @@ namespace Dev_Blog.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> logger;
-        private UserManager<User> userManager;
-        private BlogDBContext context;
+        private readonly UserManager<User> userManager;
+        private readonly BlogDBContext context;
 
         public AccountController(UserManager<User> userManager, BlogDBContext context, ILogger<AccountController> logger)
         {

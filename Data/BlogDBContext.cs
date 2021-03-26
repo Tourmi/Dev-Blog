@@ -19,6 +19,7 @@ namespace Dev_Blog.Data
         public virtual DbSet<PostTag> PostTags { get; set; }
         public virtual DbSet<Subscriber> Subscribers { get; set; }
         public virtual DbSet<SubscriberTag> SubscriberTags { get; set; }
+        public virtual DbSet<Ban> Bans { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

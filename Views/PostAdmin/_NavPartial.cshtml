@@ -4,7 +4,7 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Author")))
 {
     <li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-controller="PostAdmin" asp-action="Index" title="Posts">Posts Administration</a>

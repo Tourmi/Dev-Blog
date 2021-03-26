@@ -32,6 +32,11 @@
                         <input hidden name="id" value="@Model.ID" />
                         <button type="submit">X</button>
                     </form>
+                    <form asp-action="Ban" asp-controller="Admin">
+                        <input hidden name="IpAddress" value="@Model.IpAddress" />
+                        <input hidden name="Email" value="@Model.Email" />
+                        <button type="submit">Ban</button>
+                    </form>
                 }
             </div>
         </div>
