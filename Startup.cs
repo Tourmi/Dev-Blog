@@ -73,6 +73,7 @@ namespace Dev_Blog
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<PostViewCountUpdater>();
             services.Configure<EmailSenderConfig>(Configuration);
             services.Configure<DefaultUserConfig>(Configuration);
             services.Configure<ReCaptchaConfig>(Configuration);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dev_Blog.Config;
 using Dev_Blog.Data;
 using Dev_Blog.Models;
+using Dev_Blog.Services;
 using Dev_Blog.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +23,15 @@ namespace Dev_Blog.Controllers
         private readonly BlogDBContext context;
         private readonly IWebHostEnvironment env;
         private readonly IOptions<ReCaptchaConfig> reCaptchaConfig;
+        private readonly PostViewCountUpdater postViewCountUpdater;
 
-        public PostController(ILogger<PostController> logger, IWebHostEnvironment env, BlogDBContext context, IOptions<ReCaptchaConfig> reCaptchaConfig)
+        public PostController(ILogger<PostController> logger, IWebHostEnvironment env, BlogDBContext context, IOptions<ReCaptchaConfig> reCaptchaConfig, PostViewCountUpdater postViewCountUpdater)
         {
             this.logger = logger;
             this.context = context;
             this.env = env;
             this.reCaptchaConfig = reCaptchaConfig;
+            this.postViewCountUpdater = postViewCountUpdater;
         }
 
         [Route("", Name = "Index", Order = 0)]
@@ -93,7 +96,7 @@ namespace Dev_Blog.Controllers
                 return postNotFound(postStub);
             }
 
-            await incrementViewCount(post.ID);
+            _ = postViewCountUpdater.IncrementViewCount(post.ID);
 
             return View(post);
         }
@@ -116,29 +119,6 @@ namespace Dev_Blog.Controllers
             return posts;
         }
 
-        private async Task incrementViewCount(long postId)
-        {
-            int tries = 0;
-            bool success = false;
-            do
-            {
-                try
-                {
-                    Post p = await context.Posts.Where(p => p.ID == postId).FirstAsync();
-                    p.Views++;
-                    await context.SaveChangesAsync();
-                    success = true;
-                }
-                catch
-                {
-                    tries++;
-                    if (tries > 10)
-                    {
-                        //If we tried too many times, give up on updating the view count
-                        return;
-                    }
-                }
-            } while (!success);
-        }
+       
     }
 }
