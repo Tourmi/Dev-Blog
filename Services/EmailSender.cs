@@ -1,4 +1,5 @@
 ﻿using Dev_Blog.Config;
+using Dev_Blog.Data;
 using Dev_Blog.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Dev_Blog.Services
 {
-    public class EmailSender : IEmailSender
+    public class EmailSender
     {
         public EmailSenderConfig Options { get; }
 
@@ -22,13 +23,20 @@ namespace Dev_Blog.Services
             Options = optionsAccessor.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage, bool formatLinks = true)
         {
-            await SendEmailAsync(new EmailModel { To = email, Subject = subject, Body = htmlMessage });
+            await SendEmailAsync(new EmailModel { To = email, Subject = subject, Body = htmlMessage }, formatLinks);
         }
 
-        public async Task SendEmailAsync(EmailModel model)
+        public async Task SendEmailAsync(EmailModel model, bool formatLinks = true)
         {
+            if (formatLinks)
+            {
+                model.Body = model.Body.Replace("href=\"", "href=\"https://tourmi.dev");
+                model.Body = model.Body.Replace("src=\"", "src=\"https://tourmi.dev/");
+                model.Body = model.Body.Replace("\\", "/");
+            }
+
             using var smtp = new SmtpClient
             {
                 Credentials = new NetworkCredential()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,11 @@ namespace Dev_Blog.Models
         public Subscriber()
         {
             SubscribedTo = new HashSet<SubscriberTag>();
+        }
+
+        public enum EmailFrequency
+        {
+            None, Daily, Weekly, Monthly
         }
 
         [Key]
@@ -25,6 +31,12 @@ namespace Dev_Blog.Models
         [Required]
         [DefaultValue(true)]
         public bool SubscribedToAll { get; set; }
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime LastEmailDate { get; set; }
+        [Required]
+        [DefaultValue(EmailFrequency.Daily)]
+        public EmailFrequency MaximumEmailFrequency { get; set; }
 
         public virtual ICollection<SubscriberTag> SubscribedTo { get; set; }
 

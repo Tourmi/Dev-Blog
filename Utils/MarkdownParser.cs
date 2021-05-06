@@ -30,6 +30,22 @@ namespace Dev_Blog.Utils
     public static class MarkdownParser
     {
         /// <summary>
+        /// Parses the given markdown string, but removes all HTML tags to return raw text.
+        /// </summary>
+        /// <param name="markdown">The markdown to parse into raw text</param>
+        /// <returns>The article's raw text</returns>
+        public static string RawText(string markdown)
+        {
+            string result = ParseString(markdown);
+
+            result = result.Replace("<br />", "\n");
+            result = result.Replace("</p><p>", "\n\n");
+            result = Regex.Replace(result, @"<[^>]*?\/>|<.*?>", "");
+
+            return result;
+        }
+
+        /// <summary>
         /// Parses the given markdown string into html code.
         /// Takes care of encoding html characters inside of the given string to avoid XSS.
         /// Refer to <see cref="MarkdownParser">MarkdownParser</see> for what is supported and what isn't.

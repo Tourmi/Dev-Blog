@@ -72,7 +72,7 @@ namespace Dev_Blog
                 options.LogoutPath = "/logout";
             });
 
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<EmailSender>();
             services.AddSingleton<PostViewCountUpdater>();
             services.Configure<EmailSenderConfig>(Configuration);
             services.Configure<DefaultUserConfig>(Configuration);
