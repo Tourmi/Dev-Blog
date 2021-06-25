@@ -72,8 +72,11 @@ namespace Dev_Blog
                 options.LogoutPath = "/logout";
             });
 
-            services.AddTransient<EmailSender>();
-            services.AddSingleton<PostViewCountUpdater>();
+            services.AddHttpClient();
+
+            services.AddTransient<EmailSenderService>();
+            services.AddSingleton<PostViewCountUpdaterService>();
+            services.AddSingleton<EmailSchedulerService>();
             services.Configure<EmailSenderConfig>(Configuration);
             services.Configure<DefaultUserConfig>(Configuration);
             services.Configure<ReCaptchaConfig>(Configuration);
@@ -112,8 +115,10 @@ namespace Dev_Blog
                     pattern: "{controller=Post}/{action=Index}");
             });
 
+            var _ = app.ApplicationServices.GetService<EmailSchedulerService>();
+
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            var context = serviceScope.ServiceProvider.GetRequiredService<BlogDBContext>();
+            using var context = serviceScope.ServiceProvider.GetRequiredService<BlogDBContext>();
             context.Database.Migrate();
 
             await checkAndCreateDefaultRoles(serviceScope);

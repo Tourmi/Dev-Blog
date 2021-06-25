@@ -1,0 +1,28 @@
+﻿@model Dev_Blog.ViewModels.Email.ValidateEmailViewModel
+
+@using Dev_Blog.Utils
+
+@{
+    Layout = "~/Views/Shared/_EmailLayout.cshtml";
+}
+
+<h1>Email subscription:</h1>
+
+<div>
+    <p>Please validate your email by clicking the link below</p>
+    @Html.ActionLink("Validate email", "ValidateEmail", "Subscription", new { token = Model.Token })
+    <p>
+        If that doesn't work, please go on the following page, and copy and paste the validation token there
+    </p>
+    <p>
+        @Constants.PublicUrl/subscription/validate/@Model.Token
+        <br />
+        Validation token : @Model.Token
+    </p>
+</div>
+
+
+@section Style {
+    <style>
+    </style>
+}

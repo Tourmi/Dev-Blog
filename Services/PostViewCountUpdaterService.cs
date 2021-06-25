@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Dev_Blog.Services
 {
-    public class PostViewCountUpdater
+    public class PostViewCountUpdaterService
     {
-        private readonly ILogger<PostViewCountUpdater> logger;
+        private readonly ILogger<PostViewCountUpdaterService> logger;
         private readonly IServiceScopeFactory scopeFactory;
 
-        public PostViewCountUpdater(ILogger<PostViewCountUpdater> logger, IServiceScopeFactory scopeFactory)
+        public PostViewCountUpdaterService(ILogger<PostViewCountUpdaterService> logger, IServiceScopeFactory scopeFactory)
         {
             this.logger = logger;
             this.scopeFactory = scopeFactory;
@@ -27,7 +27,7 @@ namespace Dev_Blog.Services
         {
             await Task.Yield();
             using var scope = scopeFactory.CreateScope();
-            BlogDBContext context = scope.ServiceProvider.GetRequiredService<BlogDBContext>();
+            using BlogDBContext context = scope.ServiceProvider.GetRequiredService<BlogDBContext>();
             try
             {
                 Post p = await context.Posts.Where(p => p.ID == postId).FirstAsync();

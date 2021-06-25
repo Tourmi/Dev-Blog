@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Validate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Validate your email</h1>
+
+<p>Please either click on the link in the email you've received, or enter the received token here:  </p>
+<form asp-action="ValidateEmail">
+    <div class="form-group">
+        <label for="token">Email</label>
+        <input name="email" type="email" value="@ViewData["Email"]" />
+    </div>
+
+    <div class="form-group">
+        <label for="token">Email token</label>
+        <input name="token" type="text" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>

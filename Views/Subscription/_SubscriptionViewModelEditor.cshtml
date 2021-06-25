@@ -1,0 +1,30 @@
+﻿@model Dev_Blog.ViewModels.SubscriptionViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="Email" class="control-label"></label>
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="MaximumEmailFrequency" class="control-label"></label>
+    <select asp-for="MaximumEmailFrequency" asp-items="Html.GetEnumSelectList<Dev_Blog.Models.Subscriber.EmailFrequency>()" class="form-control"></select>
+    <span asp-validation-for="MaximumEmailFrequency" class="text-danger"></span>
+</div>
+
+<div class="form-group form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="SubscribedToAll" /> @Html.DisplayNameFor(model => model.SubscribedToAll)
+    </label>
+</div>
+
+<div class="form-group">
+    <label asp-for="SubscribedTo" class="control-label"></label>
+    <select asp-for="SubscribedTo" class="form-control tag-selector" multiple>
+        @foreach (string tag in Model.SubscribedTo)
+        {
+            <option id="@tag" value="@tag" selected>@tag</option>
+        }
+    </select>
+    <span asp-validation-for="SubscribedTo" class="text-danger"></span>
+</div>

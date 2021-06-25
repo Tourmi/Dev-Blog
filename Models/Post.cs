@@ -57,6 +57,6 @@ namespace Dev_Blog.Models
         public bool Deleted => DateDeleted != null;
         
         [NotMapped]
-        public bool Published => DatePublished != null && DatePublished <= DateTime.Now;
+        public bool Published => DatePublished != null && DatePublished <= DateTime.Now && !Deleted;
     }
 }

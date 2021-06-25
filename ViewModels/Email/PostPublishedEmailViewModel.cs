@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dev_Blog.ViewModels
+namespace Dev_Blog.ViewModels.Email
 {
-    public class EmailViewModel
+    public class PostPublishedEmailViewModel
     {
         public string Title { get; set; }
         public IEnumerable<Post> Posts { get; set; }
-        public IEnumerable<Tag> SubscribedTags { get; set; }
     }
 }

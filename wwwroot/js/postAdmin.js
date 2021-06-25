@@ -27,13 +27,6 @@ const updateStub = () => {
     }
 };
 
-const select2Select = () => $(".tag-selector").select2({
-    ajax: {
-        url: "/Tag/Search",
-        dataType: 'json'
-    }
-});
-
 function updatePreview() {
     $.get("/PostAdmin/PreviewContent", { content: contentInput.value }, function (data) {
         postPreview.innerHTML = data;
@@ -99,6 +92,5 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScheduleInput();
     updatePublishDate();
     updateStubAutoGeneration();
-    select2Select();
     isStubGeneratedOnTitleUpdate = autoGenerateStubInput.checked;
 });

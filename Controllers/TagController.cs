@@ -28,8 +28,8 @@ namespace Dev_Blog.Controllers
         /// </summary>
         /// <param name="term"></param>
         /// <returns></returns>
-        [Route("search")]
-        public string Search(string term, bool allowNewTags = true)
+        [Route("/tag/search")]
+        public string Search(string term, bool allowNewTags = false)
         {
             logger.LogTrace("GET: Tag, Search, term = {term}, allowNewTags = {allowNewTags}", term, allowNewTags);
             term = term?.ToLower()?.Trim()?.Trim('-') ?? "";
@@ -37,14 +37,15 @@ namespace Dev_Blog.Controllers
 
             TagSearchResults tagSearchResults = new TagSearchResults();
             var results = (from tag in context.Tags
-                          where tag.Name.Contains(term)
-                          select tag).Take(5);
+                           where tag.Name.Contains(term)
+                           orderby tag.Posts.Count() descending
+                           select tag).Take(8);
             foreach (var result in results)
             {
                 tagSearchResults.AddResult(result.Name, result.Name);
             }
             //If the tag doesn't exist already, and we're allowed to suggest new tags
-            if (allowNewTags && !String.IsNullOrEmpty(term) && !results.Where(t => t.Name == term).Any())
+            if (allowNewTags && !String.IsNullOrEmpty(term) && User.IsInRole("Author") && !results.Where(t => t.Name == term).Any())
             {
                 var group = new TagSearchResults.Result
                 {

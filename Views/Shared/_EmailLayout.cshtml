@@ -7,7 +7,7 @@
 </head>
 <body>
     <header>
-        <a title="Tourmi.dev" class="title" asp-action="Index" asp-controller="Post">Tourmi<sup>dev</sup></a>
+        <a title="@Dev_Blog.Utils.Constants.SiteName" class="title" asp-action="Index" asp-controller="Post">Tourmi<sup>dev</sup></a>
     </header>
 
     <div>
@@ -15,9 +15,11 @@
     </div>
     <footer class="border-top footer text-muted">
         <div>
-            Tourmi.dev &copy; 2021 Tourmi
+            @Dev_Blog.Utils.Constants.SiteName &copy; 2021 Tourmi
         </div>
-        <div><a href="#">@*TODO: Update unsubscribe link*@Unsubscribe</a></div>
+
+        @Html.ActionLink("Edit subscription", "Edit", "Subscription", new { token = ViewData["token"] })
+        @Html.ActionLink("Unsubscribe", "Unsubscribe", "Subscription", new { token = ViewData["token"] })
     </footer>
 </body>
 </html>

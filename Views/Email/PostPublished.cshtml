@@ -1,4 +1,4 @@
-﻿@model Dev_Blog.ViewModels.EmailViewModel
+﻿@model Dev_Blog.ViewModels.Email.PostPublishedEmailViewModel
 
 @using Dev_Blog.Utils
 
@@ -13,7 +13,7 @@
     {
         <li>
             <h2>@Html.ActionLink(post.Title, "Details", "Post", new { postStub = post.Stub })</h2>
-            <h3>Published on @post.DatePublished</h3>
+            <h3>Published on @post.DatePublished.Value.Date</h3>
             <p><em>@post.RawPreview()</em></p>
         </li>
     }

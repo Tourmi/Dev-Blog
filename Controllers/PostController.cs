@@ -23,9 +23,9 @@ namespace Dev_Blog.Controllers
         private readonly BlogDBContext context;
         private readonly IWebHostEnvironment env;
         private readonly IOptions<ReCaptchaConfig> reCaptchaConfig;
-        private readonly PostViewCountUpdater postViewCountUpdater;
+        private readonly PostViewCountUpdaterService postViewCountUpdater;
 
-        public PostController(ILogger<PostController> logger, IWebHostEnvironment env, BlogDBContext context, IOptions<ReCaptchaConfig> reCaptchaConfig, PostViewCountUpdater postViewCountUpdater)
+        public PostController(ILogger<PostController> logger, IWebHostEnvironment env, BlogDBContext context, IOptions<ReCaptchaConfig> reCaptchaConfig, PostViewCountUpdaterService postViewCountUpdater)
         {
             this.logger = logger;
             this.context = context;

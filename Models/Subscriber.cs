@@ -17,7 +17,7 @@ namespace Dev_Blog.Models
 
         public enum EmailFrequency
         {
-            None, Daily, Weekly, Monthly
+            AsSoonAsPossible, Daily, Weekly, Monthly
         }
 
         [Key]
@@ -29,13 +29,12 @@ namespace Dev_Blog.Models
         [DefaultValue(false)]
         public bool ValidatedEmail { get; set; }
         [Required]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool SubscribedToAll { get; set; }
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastEmailDate { get; set; }
         [Required]
-        [DefaultValue(EmailFrequency.Daily)]
+        [DefaultValue(EmailFrequency.Weekly)]
         public EmailFrequency MaximumEmailFrequency { get; set; }
 
         public virtual ICollection<SubscriberTag> SubscribedTo { get; set; }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Dev_Blog.Config;
+using Dev_Blog.Utils;
 
 namespace Dev_Blog
 {
@@ -23,6 +24,7 @@ namespace Dev_Blog
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls(Constants.LocalUrl);
                 })
             .ConfigureAppConfiguration((hostContext, builder) =>
             {

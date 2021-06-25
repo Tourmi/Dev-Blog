@@ -14,29 +14,17 @@ using System.Threading.Tasks;
 
 namespace Dev_Blog.Services
 {
-    public class EmailSender
+    public class EmailSenderService
     {
         public EmailSenderConfig Options { get; }
 
-        public EmailSender(IOptions<EmailSenderConfig> optionsAccessor)
+        public EmailSenderService(IOptions<EmailSenderConfig> optionsAccessor)
         {
             Options = optionsAccessor.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage, bool formatLinks = true)
+        public async Task SendEmailAsync(EmailModel model)
         {
-            await SendEmailAsync(new EmailModel { To = email, Subject = subject, Body = htmlMessage }, formatLinks);
-        }
-
-        public async Task SendEmailAsync(EmailModel model, bool formatLinks = true)
-        {
-            if (formatLinks)
-            {
-                model.Body = model.Body.Replace("href=\"", "href=\"https://tourmi.dev");
-                model.Body = model.Body.Replace("src=\"", "src=\"https://tourmi.dev/");
-                model.Body = model.Body.Replace("\\", "/");
-            }
-
             using var smtp = new SmtpClient
             {
                 Credentials = new NetworkCredential()
@@ -49,7 +37,8 @@ namespace Dev_Blog.Services
                 EnableSsl = Options.EmailSenderSmtpEnableSSL,
                 Timeout = 100000
             };
-            //MailMessage message = new MailMessage(new MailAddress(Options.EmailSenderEmail, Options.EmailSenderDisplayName), new MailAddress(model.To))
+
+            //TODO : Change actual MailAddress to real email address
             MailMessage message = new MailMessage(new MailAddress(Options.EmailSenderEmail, Options.EmailSenderDisplayName), new MailAddress("domino_b10@hotmail.com"))
             {
                 Subject = model.Subject,
