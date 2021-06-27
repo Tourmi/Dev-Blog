@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -69,10 +70,10 @@ namespace Dev_Blog.Utils
         public static async Task<string> RenderEmailViewAsync(IServiceScope serviceScope, string path, Dictionary<string, string> properties, string token)
         {
             string query = "?";
-            query += $"token={token}";
+            query += $"token={WebUtility.UrlEncode(token)}";
             foreach (var property in properties)
             {
-                query += $"&{property.Key}={property.Value}";
+                query += $"&{property.Key}={WebUtility.UrlEncode(property.Value)}";
             }
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Constants.LocalUrl + path + query);
