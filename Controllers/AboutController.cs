@@ -16,14 +16,10 @@ namespace Dev_Blog.Controllers
     public class AboutController : Controller
     {
         private readonly ILogger<AboutController> logger;
-        private readonly EmailSchedulerService emailScheduler;
-        private readonly BlogDBContext context;
 
-        public AboutController(ILogger<AboutController> logger, EmailSchedulerService emailScheduler, BlogDBContext context)
+        public AboutController(ILogger<AboutController> logger)
         {
             this.logger = logger;
-            this.emailScheduler = emailScheduler;
-            this.context = context;
         }
 
         [Route("about")]
