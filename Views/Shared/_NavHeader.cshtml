@@ -11,7 +11,16 @@
                     <a class="nav-link text-dark" asp-action="Index" asp-controller="About" title="About">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-action="Index" asp-controller="Post" title="Blog">Blog</a>
+                    <a id="search-button" class="nav-link text-dark" href="#" title="Search">Search</a>
+                    <select id="search-input" class="tag-selector" multiple>
+                        @if (ViewData.ContainsKey("Tags"))
+                        {
+                            foreach (string tag in (string[])ViewData["Tags"])
+                            {
+                                <option id="@tag" value="@tag" selected>@tag</option>
+                            }
+                        }
+                    </select>
                 </li>
                 <partial name="~/Views/PostAdmin/_NavPartial.cshtml" />
                 <partial name="~/Views/Admin/_NavPartial.cshtml" />
@@ -21,3 +30,18 @@
         </div>
     </div>
 </nav>
+
+
+<script>
+    var baseURL = "@Url.ActionLink("Index", "Post")"
+
+    document.addEventListener('DOMContentLoaded', () => {
+        $("#search-button").click(function () {
+            var query = ""
+            if ($("#search-input").val() != "") {
+                query = "?tags=" + $("#search-input").val()
+            }
+            document.location = baseURL + query
+        })
+    })
+</script>

@@ -207,3 +207,15 @@ p.group {
 .verified {
     cursor:default;
 }
+
+#search-input {
+    display: inline-block;
+}
+
+.nav-item a {
+    display: inline-block;
+}
+
+.select2 {
+    display: inline-block;
+}

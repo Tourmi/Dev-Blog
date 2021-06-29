@@ -49,6 +49,7 @@ namespace Dev_Blog.Controllers
                 var tagArray = tags.Split(",");
 
                 posts = posts.Where(p => p.Tags.Select(t => t.TagID).Where(t => tagArray.Contains(t)).Any());
+                ViewData["Tags"] = tagArray;
             }
             if (!String.IsNullOrWhiteSpace(author))
             {
