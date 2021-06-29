@@ -47,8 +47,10 @@ namespace Dev_Blog.Controllers
             if (!String.IsNullOrWhiteSpace(tags))
             {
                 var tagArray = tags.Split(",");
-
-                posts = posts.Where(p => p.Tags.Select(t => t.TagID).Where(t => tagArray.Contains(t)).Any());
+                foreach (var tag in tagArray)
+                {
+                    posts = posts.Where(p => p.Tags.Select(t => t.TagID).Contains(tag));
+                }
                 ViewData["Tags"] = tagArray;
             }
             if (!String.IsNullOrWhiteSpace(author))
