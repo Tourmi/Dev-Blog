@@ -43,6 +43,8 @@ namespace Dev_Blog.Models
         public DateTime? DateModified { get; set; }
         public DateTime? DateDeleted { get; set; }
 
+        [DefaultValue(false)]
+        public bool IsAboutPage { get; set; }
 
         [Required]
         public string AuthorId { get; set; }

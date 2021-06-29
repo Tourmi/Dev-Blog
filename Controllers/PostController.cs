@@ -114,7 +114,7 @@ namespace Dev_Blog.Controllers
 
         private IQueryable<Post> getValidPosts()
         {
-            var posts = context.Posts.Where(p => p.DateDeleted == null && p.DatePublished <= DateTime.Now);
+            var posts = context.Posts.Where(p => p.DateDeleted == null && p.DatePublished <= DateTime.Now && !p.IsAboutPage);
 
             return posts;
         }

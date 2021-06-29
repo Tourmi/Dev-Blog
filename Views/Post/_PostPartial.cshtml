@@ -6,7 +6,10 @@
 <article class="post-article">
     <header>
         <h1>@Html.DisplayFor(model => model.Title)</h1>
-        <p>Posted by @Model.Author.DisplayName on @Model.DatePublished.Value.Year/@Model.DatePublished.Value.Month/@Model.DatePublished.Value.Day</p>
+        @if (!ViewData.ContainsKey("ShowPublishedDate") || (bool)ViewData["ShowPublishedDate"])
+        {
+            <p>Posted by @Model.Author.DisplayName on @Model.DatePublished.Value.Year/@Model.DatePublished.Value.Month/@Model.DatePublished.Value.Day</p>
+        }
         @if (@Model.DateModified != null)
         {
             <p>Last modified on @Model.DateModified.Value.Year/@Model.DateModified.Value.Month/@Model.DateModified.Value.Day</p>

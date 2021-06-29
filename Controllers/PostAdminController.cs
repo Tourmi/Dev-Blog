@@ -90,7 +90,8 @@ namespace Dev_Blog.Controllers
                 DateDeleted = null,
                 DateModified = null,
                 DatePublished = null,
-                Title = viewModel.Title
+                Title = viewModel.Title,
+                IsAboutPage = false
             };
 
             post.Tags = Tag.ToPostTags(context, post, viewModel.Tags);

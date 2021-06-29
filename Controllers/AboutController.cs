@@ -16,10 +16,12 @@ namespace Dev_Blog.Controllers
     public class AboutController : Controller
     {
         private readonly ILogger<AboutController> logger;
+        private readonly BlogDBContext context;
 
-        public AboutController(ILogger<AboutController> logger)
+        public AboutController(ILogger<AboutController> logger, BlogDBContext context)
         {
             this.logger = logger;
+            this.context = context;
         }
 
         [Route("about")]
@@ -27,7 +29,9 @@ namespace Dev_Blog.Controllers
         {
             logger.LogTrace("GET: About, Index");
 
-            return View();
+            Post post = context.Posts.Where(p => p.IsAboutPage).Include(p => p.Author).Include(p => p.Tags).FirstOrDefault();
+
+            return View(post);
         }
     }
 }
