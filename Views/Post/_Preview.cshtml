@@ -22,8 +22,11 @@
                 </a>
             </div>
             <div class="row">
-                <h4 class="col-6">Written by @Model.Author.DisplayName</h4>
-                <h4 class="col-6">Posted on @Model.DatePublished.Value.ToLongDateString()</h4>
+                <h4 class="col-6">By @Model.Author.DisplayName</h4>
+                <h4 class="col-6"><time class="timeago" datetime="@Model.DatePublished.Value.ToString("s")" title="@Model.DatePublished.Value.ToLongDateString()">@Model.DatePublished.Value.ToLongDateString()</time></h4>
+            </div>
+            <div class="row">
+                <p class="col-6"><em>@Model.RawPreview(250)</em></p>
             </div>
             <div class="row">
                 <div class="tags col">

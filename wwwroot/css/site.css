@@ -205,11 +205,15 @@ p.group {
 }
 
 .verified {
-    cursor:default;
+    cursor: default;
 }
 
 #search-input {
     display: inline-block;
+    height: 31px;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .nav-item a {

@@ -8,13 +8,13 @@ namespace Dev_Blog.Utils
 {
     public static class PostExtensions
     {
-        public static string RawPreview(this Post post)
+        public static string RawPreview(this Post post, int maxLength = 500)
         {
             string raw = post.RawText();
             int newParagraphIndex = raw.IndexOf("\n\n");
             if (newParagraphIndex < 0)
             {
-                if (raw.Length <= 500)
+                if (raw.Length <= maxLength)
                 {
                     return raw;
                 }
@@ -22,10 +22,10 @@ namespace Dev_Blog.Utils
                 newParagraphIndex = raw.Length;
             }
 
-            int lastWordIndex = raw.Substring(0, Math.Min(newParagraphIndex, 500)).LastIndexOf(" ");
+            int lastWordIndex = raw.Substring(0, Math.Min(newParagraphIndex, maxLength)).LastIndexOf(" ");
             if (lastWordIndex < 0)
             {
-                lastWordIndex = Math.Min(500, newParagraphIndex);
+                lastWordIndex = Math.Min(maxLength, newParagraphIndex);
             }
 
             raw = raw.Substring(0, lastWordIndex) + " [...]";
