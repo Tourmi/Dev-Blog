@@ -1,17 +1,37 @@
 ﻿:root {
-    --bg-color: #D2FDFF;
-    --body-bg-color: #F2FDFF;
-    --text-color: #092327;
-    --main-color: #1B9AAA;
-    --accent-color: #FF934f;
-    --accent2-color: #96e6b3;
+    --bg-color: #013032;
+    --preview-bg-color: #045D62;
+    --nav-bg-color: #045D62;
+    --text-color: #F2FDFF;
+    --text-color2: #092327;
+    --border-color: #95A8AB;
+    --button-color: #b4ffd0;
+    --link-color: #b4ffd0;
+    --link-visited-color: #b4ffd0;
+}
+
+.palette0 {
+    --bg-color: #F2FDFF;
+    --preview-bg-color: #C3CED0;
+    --nav-bg-color: #b4ffd0;
+    --text-color: #000F0F;
+    --text-color2: #F2FDFF;
+    --border-color: #95A8AB;
+    --border-color2: #b4ffd0;
+    --button-color: #013032;
+    --link-color: #045D62;
+    --link-visited-color: #045D62;
 }
 
 .palette1 {
-    --bg-color: #D2FDFF;
-    --body-bg-color: #F2FDFF;
-    --text-color: #092327;
-    --main-color: #1B9AAA;
-    --accent-color: #FF934f;
-    --accent2-color: #96e6b3;
+    --bg-color: #000F0F;
+    --preview-bg-color: #013032;
+    --nav-bg-color: #045D62;
+    --text-color: #F2FDFF;
+    --text-color2: #092327;
+    --border-color: #95A8AB;
+    --border-color2: #045D62;
+    --button-color: #b4ffd0;
+    --link-color: #b4ffd0;
+    --link-visited-color: #b4ffd0;
 }

@@ -7,6 +7,6 @@
 @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Author")))
 {
     <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-controller="PostAdmin" asp-action="Index" title="Posts">Posts Administration</a>
+        <a id="manage" class="nav-link" asp-controller="PostAdmin" asp-action="Index" title="Posts">Posts Administration</a>
     </li>
 }
