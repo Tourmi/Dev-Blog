@@ -23,15 +23,15 @@
 
 @section Scripts {
     <script>
-        var subscribedTo;
+        var tags;
 
         function onSubscribeAllChanged(element) {
-            subscribedTo.prop("disabled", element.is(":checked"));
+            tags.prop("disabled", element.is(":checked"));
         }
 
         $(document).ready(function () {
             var subscribeToAll = $("input[name='SubscribedToAll']");
-            subscribedTo = $("select[name='SubscribedTo']");
+            tags = $("select[name='Tags']");
             subscribeToAll.change(function () {
                 onSubscribeAllChanged($(this));
             });

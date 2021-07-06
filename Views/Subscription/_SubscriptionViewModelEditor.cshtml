@@ -19,12 +19,12 @@
 </div>
 
 <div class="form-group">
-    <label asp-for="SubscribedTo" class="control-label"></label>
-    <select asp-for="SubscribedTo" class="form-control tag-selector" data-form-type="text" multiple>
-        @foreach (string tag in Model.SubscribedTo)
+    <label asp-for="Tags" class="control-label"></label>
+    <select asp-for="Tags" class="form-control tag-selector" multiple>
+        @foreach (string tag in Model.Tags)
         {
             <option id="@tag" value="@tag" selected>@tag</option>
         }
     </select>
-    <span asp-validation-for="SubscribedTo" class="text-danger"></span>
+    <span asp-validation-for="Tags" class="text-danger"></span>
 </div>

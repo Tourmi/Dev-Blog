@@ -36,9 +36,9 @@ namespace Dev_Blog.Controllers
 
         [Route("", Name = "Index", Order = 0)]
         [Route("post", Name = "Post", Order = 1)]
-        public async Task<IActionResult> Index(string tags, string author, int? currPage)
+        public async Task<IActionResult> Index(string tags, int? currPage)
         {
-            logger.LogTrace("GET: Post, Index, tags = {tags}, author = {author}, currPage = {currPage}", tags, author, currPage);
+            logger.LogTrace("GET: Post, Index, tags = {tags},  currPage = {currPage}", tags, currPage);
             const int postsPerPage = 10;
             IQueryable<Post> posts = getValidPosts()
                 .Include(p => p.Author)
@@ -53,10 +53,6 @@ namespace Dev_Blog.Controllers
                     posts = posts.Where(p => p.Tags.Select(t => t.TagID).Contains(tag));
                 }
                 ViewData["Tags"] = tagArray;
-            }
-            if (!String.IsNullOrWhiteSpace(author))
-            {
-                posts = posts.Where(p => p.Author.DisplayName.ToLower() == author.ToLower());
             }
 
             posts = posts.OrderByDescending(p => p.DatePublished);

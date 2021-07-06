@@ -1,6 +1,6 @@
 ﻿function onSubmit(token) {
     document.getElementsByName("ReCaptchaResponse")[0].value = token;
-    document.getElementById("replyForm").submit();
+    $("#replyForm").submit();
 }
 
 function moveCommentBox(comment) {
@@ -27,11 +27,20 @@ function moveCommentBox(comment) {
 
     $.get("/Comment/Create", { postID: $(".post").attr("id"), commentID: commentID }, function (data) {
         if (comment == null) {
-            $(".comments").prepend(data);
+            $(".comments").prepend(data).append(function () {
+                $("#replyForm").validate();
+            });
         } else {
-            $(comment).append(data);
+            $(comment).append(data).append(function () {
+                $("#replyForm").validate();
+            });
         }
-        $(".recaptcha").unbind("click").click(function (e) {
+        $(".recaptcha").click(function (e) {
+            var form = $("#replyForm");
+            if (!form.valid()) {
+                return;
+            }
+
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();

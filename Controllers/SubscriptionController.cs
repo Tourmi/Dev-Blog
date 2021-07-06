@@ -91,7 +91,7 @@ namespace Dev_Blog.Controllers
                 ModelState.AddModelError("Email", "An email is required!");
             }
 
-            if (!viewModel.SubscribedToAll && !viewModel.SubscribedTo.Any())
+            if (!viewModel.SubscribedToAll && !viewModel.Tags.Any())
             {
                 ModelState.AddModelError("SubscribedTo", "Please subscribe to at least a tag, or subscribe to everything!");
             }
@@ -131,7 +131,7 @@ namespace Dev_Blog.Controllers
             await context.Subscribers.AddAsync(sub);
             await context.SaveChangesAsync();
 
-            foreach (var tag in viewModel.SubscribedTo)
+            foreach (var tag in viewModel.Tags)
             {
                 string lowerTag = tag.ToLower();
                 var t = await context.Tags.Where(t => t.Name == lowerTag).FirstOrDefaultAsync();
@@ -165,7 +165,7 @@ namespace Dev_Blog.Controllers
                 Token = sub.ValidationToken,
                 Email = sub.Email,
                 SubscribedToAll = sub.SubscribedToAll,
-                SubscribedTo = sub.SubscribedTo.Select(st => st.TagID).ToArray()
+                Tags = sub.SubscribedTo.Select(st => st.TagID).ToArray()
             };
 
             return View(viewModel);
@@ -192,7 +192,7 @@ namespace Dev_Blog.Controllers
             sub.MaximumEmailFrequency = viewModel.MaximumEmailFrequency;
             sub.SubscribedTo.Clear();
 
-            foreach (var tag in viewModel.SubscribedTo)
+            foreach (var tag in viewModel.Tags)
             {
                 string lowerTag = tag.ToLower();
                 var t = await context.Tags.Where(t => t.Name == lowerTag).FirstOrDefaultAsync();

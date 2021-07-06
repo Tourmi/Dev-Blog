@@ -52,7 +52,11 @@ $(document).ready(function () {
     select2Select()
     select2Select2()
 
+    //Fuck you Dashlane
+    $(".select2-search__field").attr("data-form-type", "text")
+
     if (getPaletteId() == 0) {
         $(".fa-lightbulb").toggleClass("far").toggleClass("fas")
     }
+    $("form").validate()
 });

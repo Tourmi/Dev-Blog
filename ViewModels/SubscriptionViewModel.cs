@@ -12,7 +12,7 @@ namespace Dev_Blog.ViewModels
     {
         public SubscriptionViewModel()
         {
-            SubscribedTo = new string[0];
+            Tags = new string[0];
         }
 
         public string Token { get; set; }
@@ -25,6 +25,6 @@ namespace Dev_Blog.ViewModels
         public EmailFrequency MaximumEmailFrequency { get; set; }
 
         [Display(Name = "Subscribe to", Description = "Choose the specific tags you wish to subscribe to.")]
-        public string[] SubscribedTo { get; set; }
+        public string[] Tags { get; set; }
     }
 }

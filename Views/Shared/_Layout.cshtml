@@ -22,6 +22,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/palettes.css" />
+        <link rel="stylesheet" href="~/css/select2.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="~/css/site.min.css" />
@@ -49,6 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=@recaptcha.Value.ReCaptchaPublicKey"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js" integrity="sha512-RlGrSmkje9EE/FXpJKWf0fvOlg4UULy/blvNsviBX9LFwMj/uewXVoanRbxTIRDXy/0A3fBQppTmJ/qOboJzmA==" crossorigin="anonymous"></script>
+    <partial name="_ValidationScriptsPartial" />
     <environment include="Development">
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
