@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Dev_Blog.Models.Post>
+﻿@model Dev_Blog.Utils.PaginatedData<Dev_Blog.Models.Post>
 
 @{
     ViewData["Title"] = "Posts";
@@ -14,34 +14,34 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ThumbnailPath)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().ThumbnailPath)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stub)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Stub)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DateCreated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DatePublished)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DatePublished)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateModified)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DateModified)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateDeleted)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DateDeleted)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Author)
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Author)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Data)
         {
 
             <tr>
@@ -78,3 +78,22 @@
         }
     </tbody>
 </table>
+
+@if (Model.TotalPages > 1)
+{
+    <p>Page @Model.CurrentPage of @Model.TotalPages</p>
+    <ul class="pagination">
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="1" class="page-link">First</a>
+        </li>
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="@(Model.CurrentPage - 1)" class="page-link">Previous</a>
+        </li>
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="@(Model.CurrentPage + 1)" class="page-link">Next</a>
+        </li>
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="@Model.TotalPages" class="page-link">Last</a>
+        </li>
+    </ul>
+}

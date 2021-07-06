@@ -34,15 +34,32 @@ namespace Dev_Blog.Controllers
 
         // GET: PostAdmin
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index(int? currPage)
         {
-            logger.LogTrace("GET: PostAdmin, Index");
-            if (User.IsInRole("Admin"))
+            logger.LogTrace("GET: PostAdmin, Index, currPage = {currPage}", currPage);
+            const int postsPerPage = 30;
+
+            IQueryable<Post> posts = context.Posts.OrderByDescending(p => p.DateCreated);
+
+            if (!User.IsInRole("Admin"))
             {
-                return View(context.Posts);
+                posts = posts.Where(p => p.Author.UserName == User.Identity.Name && p.DateDeleted == null);
             }
 
-            return View(context.Posts.Where(p => p.Author.UserName == User.Identity.Name && p.DateDeleted == null));
+            if (currPage == null || currPage < 1)
+            {
+                currPage = 1;
+            }
+
+            PaginatedData<Post> result = new PaginatedData<Post>()
+            {
+                PageSize = postsPerPage,
+                CurrentPage = currPage.Value,
+                Count = await posts.CountAsync()
+            };
+
+            result.Data = posts.Skip((currPage.Value - 1) * postsPerPage).Take(postsPerPage);
+            return View(result);
         }
 
         // GET: PostAdmin/Details/5

@@ -39,13 +39,14 @@ namespace Dev_Blog.Controllers
         public async Task<IActionResult> Index(string tags, string author, int? currPage)
         {
             logger.LogTrace("GET: Post, Index, tags = {tags}, author = {author}, currPage = {currPage}", tags, author, currPage);
-            const int postsPerPage = 20;
+            const int postsPerPage = 10;
             IQueryable<Post> posts = getValidPosts()
                 .Include(p => p.Author)
                 .Include(p => p.Tags);
-
+            ViewData["TagList"] = "";
             if (!String.IsNullOrWhiteSpace(tags))
             {
+                ViewData["TagList"] = tags;
                 var tagArray = tags.Split(",");
                 foreach (var tag in tagArray)
                 {

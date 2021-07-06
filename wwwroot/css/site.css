@@ -37,6 +37,26 @@ a, .nav-link {
         color: var(--link-color);
     }
 
+.text-danger {
+    color: var(--error-text-color) !important;
+}
+
+.form-group .form-control {
+    background-color: var(--form-background-color);
+    color: var(--text-color);
+}
+
+    .form-group .form-control:disabled, .form-group .form-control:not(select):read-only {
+        background-color: var(--disabled-form-background-color);
+        color: var(--disabled-form-text-color);
+    }
+
+    .form-group .form-control:active:focus, .form-group .form-control:focus {
+        border-color: var(--border-color);
+        box-shadow: 0 0 0 0.2rem var(--border-color2);
+    }
+
+
 .form-group .btn.btn-primary {
     color: var(--text-color2);
     background-color: var(--button-color);
@@ -61,6 +81,30 @@ a, .nav-link {
         .form-group .btn.btn-primary:active:focus, .form-group .btn.btn-primary:focus {
             box-shadow: 0 0 0 0.2rem var(--border-color2);
         }
+
+.page-item a.page-link {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: color 0s, background-color 0s;
+}
+
+    .page-item a.page-link:hover {
+        color: var(--dark-link);
+        transition: color 0s;
+    }
+
+    .page-item a.page-link:active {
+        border-color: var(--border-color);
+    }
+
+        .page-item a.page-link:active:focus, .page-item a.page-link:focus {
+            box-shadow: 0 0 0 0.2rem var(--border-color2);
+        }
+
+.page-item.disabled a.page-link {
+    background-color: var(--disabled-color);
+    transition: background-color 0s;
+}
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: var(--text-color2);
@@ -129,10 +173,6 @@ body {
 .content {
     padding-top: 1em;
     min-height: 100%;
-}
-
-.tag-selector {
-    min-width: 200px;
 }
 
 blockquote {
@@ -287,17 +327,44 @@ p.group {
     display: inline-block;
 }
 
+nav .tag-selector {
+    width: 250px;
+}
+
 .tag-selector {
     display: inline-block;
-    width: 200px;
-    color: var(--text-color2);
+    color: var(--dark-text);
     transition: color ease 0.5s;
 }
 
-.select2-container {
-    color: var(--text-color2);
+    .tag-selector:disabled {
+        background-color: var(--disabled-form-background-color);
+    }
+
+.select2-container .select2-selection {
+    background-color: var(--form-background-color);
+    color: var(--dark-text);
     transition: color ease 0.5s;
 }
+
+.select2-container:disabled .select2-selection, .select2-container--disabled .select2-selection {
+    background-color: var(--disabled-form-background-color) !important;
+}
+
+.select2-container .select2-dropdown {
+    background-color: var(--form-background-color);
+    border-color: var(--border-color);
+}
+
+    .select2-container .select2-dropdown .select2-results__option--highlighted {
+        background-color: var(--preview-bg-color);
+        color: var(--text-color);
+    }
+
+    .select2-container .select2-dropdown .select2-results__option[aria-selected="true"] {
+        background-color: var(--disabled-form-background-color);
+        color: var(--disabled-form-text-color);
+    }
 
 .table {
     color: var(--text-color);

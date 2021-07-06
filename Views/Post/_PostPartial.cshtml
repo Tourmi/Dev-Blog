@@ -15,6 +15,7 @@
             <p>Last modified on @Model.DateModified.Value.Year/@Model.DateModified.Value.Month/@Model.DateModified.Value.Day</p>
         }
     </header>
+    <hr />
     <div class="post" id="@Model.ID">
         @Html.Raw(MarkdownParser.ParseString(Model.Content))
     </div>

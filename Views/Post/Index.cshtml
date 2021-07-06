@@ -18,19 +18,23 @@
             <partial name="_Preview" model="post" />
         }
     }
-    <p>Page @Model.CurrentPage of @Model.TotalPages</p>
-    <ul class="pagination">
-        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-            <a asp-area="" asp-action="" asp-route-currPage="1" class="page-link">First</a>
-        </li>
-        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-            <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage - 1)" class="page-link">Previous</a>
-        </li>
-        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
-            <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage + 1)" class="page-link">Next</a>
-        </li>
-        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
-            <a asp-area="" asp-action="" asp-route-currPage="@Model.TotalPages" class="page-link">Last</a>
-        </li>
-    </ul>
+    @if (Model.TotalPages > 1)
+    {
+        <p>Page @Model.CurrentPage of @Model.TotalPages</p>
+        <ul class="pagination">
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a asp-area="" asp-action="" asp-route-currPage="1" asp-route-tags="@ViewData["TagList"]" class="page-link">First</a>
+            </li>
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage - 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Previous</a>
+            </li>
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage + 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Next</a>
+            </li>
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                <a asp-area="" asp-action="" asp-route-currPage="@Model.TotalPages" asp-route-tags="@ViewData["TagList"]" class="page-link">Last</a>
+            </li>
+        </ul>
+    }
+
 </section>
