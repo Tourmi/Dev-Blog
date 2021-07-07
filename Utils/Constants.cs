@@ -11,5 +11,6 @@ namespace Dev_Blog.Utils
         public const string PublicUrl = "https://tourmi.dev";
         public const string SiteName = "Tourmi.dev";
         public const string SiteOwner = "Tourmi";
+        public const string SiteTwitter = "@TourmiDev";
     }
 }

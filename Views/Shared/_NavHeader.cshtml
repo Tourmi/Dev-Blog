@@ -51,7 +51,6 @@
 
         $("#change-theme").click(function () {
             const newId = (getPaletteId() + 1) % 2;
-            setCookie("paletteId", newId);
             changePalette(newId);
         })
     })

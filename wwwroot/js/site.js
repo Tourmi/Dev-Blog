@@ -9,6 +9,8 @@ const changePalette = (id) =>
     } else if (id == 0) {
         $(".fa-lightbulb").toggleClass("far").toggleClass("fas")
     }
+
+    setCookie("paletteId", id)
 }
 
 const select2Select = () => $(".tag-selector").select2({

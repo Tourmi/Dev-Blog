@@ -6,6 +6,22 @@
     ViewData["ShowPublishedDate"] = false;
 }
 
+@section OpenGraph {
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="@(Dev_Blog.Utils.Constants.PublicUrl + "/about")" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@Dev_Blog.Utils.PostExtensions.RawPreview(Model, 180)" />
+    @if (!string.IsNullOrWhiteSpace(Model.ThumbnailPath))
+    {
+        <meta property="og:image" content="@(Dev_Blog.Utils.Constants.PublicUrl + "/" + Model.ThumbnailPath.Replace("\\", "/"))" />
+        <meta property="og:image:url" content="@(Dev_Blog.Utils.Constants.PublicUrl + "/" + Model.ThumbnailPath.Replace("\\", "/"))" />
+        <meta property="og:image:secure_url" content="@(Dev_Blog.Utils.Constants.PublicUrl + "/" + Model.ThumbnailPath.Replace("\\", "/"))" />
+        <meta property="og:image:type" content="image/@Model.ThumbnailPath.Split(".").Last().Replace("jpg", "jpeg")" />
+        <meta property="og:image:alt" content="Picture of @Dev_Blog.Utils.Constants.SiteOwner" />
+    }
+    <meta property="profile:username" content="@Dev_Blog.Utils.Constants.SiteOwner" />
+}
+
 <section>
     <partial name="~/Views/Post/_PostPartial.cshtml" model="Model" />
 </section>

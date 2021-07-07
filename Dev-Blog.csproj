@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\audio\blogpost\**" />
+    <Compile Remove="wwwroot\img\blogpost\**" />
+    <Content Remove="wwwroot\audio\blogpost\**" />
+    <Content Remove="wwwroot\img\blogpost\**" />
+    <EmbeddedResource Remove="wwwroot\audio\blogpost\**" />
+    <EmbeddedResource Remove="wwwroot\img\blogpost\**" />
+    <None Remove="wwwroot\audio\blogpost\**" />
+    <None Remove="wwwroot\img\blogpost\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20200404035236_FirstMigration.cs" />
     <Compile Remove="Migrations\20200404035236_FirstMigration.Designer.cs" />
     <Compile Remove="Migrations\20200405052337_Comments.cs" />
@@ -48,6 +59,7 @@
 
     <ItemGroup>
       <Folder Include="Views\Shared\DisplayTemplates\" />
+      <Folder Include="wwwroot\audio\" />
       <Folder Include="wwwroot\img\" />
     </ItemGroup>
 

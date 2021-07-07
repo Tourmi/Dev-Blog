@@ -16,7 +16,7 @@ namespace Dev_Blog.Utils
             {
                 if (raw.Length <= maxLength)
                 {
-                    return raw;
+                    return raw.Trim();
                 }
 
                 newParagraphIndex = raw.Length;
@@ -30,7 +30,7 @@ namespace Dev_Blog.Utils
 
             raw = raw.Substring(0, lastWordIndex) + " [...]";
 
-            return raw;
+            return raw.Trim();
         }
 
         public static string Parse(this Post post) => MarkdownParser.ParseString(post.Content);
