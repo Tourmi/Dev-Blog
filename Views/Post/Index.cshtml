@@ -5,36 +5,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<section class="container">
-    @if (!Model.Data.Any())
-    {
-        <h2>No posts were found</h2>
-    }
-    else
-    {
-        @foreach (Dev_Blog.Models.Post post in Model.Data)
+<div class="row">
+    <section class="container col-xl-9">
+        @if (!Model.Data.Any())
         {
-            <partial name="_Preview" model="post" />
+            <h2>No posts were found</h2>
         }
-    }
-    @if (Model.TotalPages > 1)
-    {
-        <p>Page @Model.CurrentPage of @Model.TotalPages</p>
-        <ul class="pagination">
-            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="1" asp-route-tags="@ViewData["TagList"]" class="page-link">First</a>
-            </li>
-            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage - 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Previous</a>
-            </li>
-            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage + 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Next</a>
-            </li>
-            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="@Model.TotalPages" asp-route-tags="@ViewData["TagList"]" class="page-link">Last</a>
-            </li>
-        </ul>
-    }
+        else
+        {
+            @foreach (Dev_Blog.Models.Post post in Model.Data)
+            {
+                <partial name="_Preview" model="post" />
+            }
+        }
+        @if (Model.TotalPages > 1)
+        {
+            <p>Page @Model.CurrentPage of @Model.TotalPages</p>
+            <ul class="pagination">
+                <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="1" asp-route-tags="@ViewData["TagList"]" class="page-link">First</a>
+                </li>
+                <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage - 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Previous</a>
+                </li>
+                <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage + 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Next</a>
+                </li>
+                <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="@Model.TotalPages" asp-route-tags="@ViewData["TagList"]" class="page-link">Last</a>
+                </li>
+            </ul>
+        }
 
-</section>
+    </section>
+    @if (ViewData.ContainsKey("PopularPosts") || ViewData.ContainsKey("PostList"))
+    {
+        <aside class="col-xl-3">
+            @if (ViewData.ContainsKey("PopularPosts"))
+            {
+                <h4>Popular posts</h4>
+                <ul>
+                    @foreach (var post in (IEnumerable<MinPostViewModel>)ViewData["PopularPosts"])
+                    {
+                        <li>
+                            <a href="/post/@post.Stub">@post.Title</a>
+                        </li>
+                    }
+                </ul>
+                @if (ViewData.ContainsKey("PostList"))
+                {
+                    <hr />
+                }
+            }
+            @if (ViewData.ContainsKey("PostList"))
+            {
+                <h4>Post history</h4>
+                <ul>
+                    @foreach (var postYear in ((IEnumerable<MinPostViewModel>)ViewData["PostList"]).GroupBy(p => p.PublishDate.Year))
+                    {
+                        <li>
+                            <h5>@postYear.First().PublishDate.Year</h5>
+                            <ul>
+                                @foreach (var postMonth in postYear.GroupBy(p => p.PublishDate.Month))
+                                {
+                                    <li>
+                                        <h6>@postMonth.First().PublishDate.ToString("MMMM")</h6>
+                                        <ul>
+                                            @foreach (var post in postMonth)
+                                            {
+                                                <li>
+                                                    <a href="/post/@post.Stub">@post.Title</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            }
+        </aside>
+    }
+</div>
