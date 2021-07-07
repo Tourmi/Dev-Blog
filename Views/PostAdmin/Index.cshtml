@@ -1,0 +1,99 @@
+﻿@model Dev_Blog.Utils.PaginatedData<Dev_Blog.Models.Post>
+
+@{
+    ViewData["Title"] = "Posts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Posts</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().ThumbnailPath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Stub)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DatePublished)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DateModified)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().DateDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Author)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+
+            <tr>
+                <td>
+                    <img src="@item.ThumbnailPath" alt="@item.Title" title="@item.Title" class="thumbnail" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stub)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePublished)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateModified)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateDeleted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <p>Page @Model.CurrentPage of @Model.TotalPages</p>
+    <ul class="pagination">
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="1" class="page-link">First</a>
+        </li>
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="@(Model.CurrentPage - 1)" class="page-link">Previous</a>
+        </li>
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="@(Model.CurrentPage + 1)" class="page-link">Next</a>
+        </li>
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a asp-action="Index" asp-route-currPage="@Model.TotalPages" class="page-link">Last</a>
+        </li>
+    </ul>
+}

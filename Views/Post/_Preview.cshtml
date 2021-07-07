@@ -1,0 +1,46 @@
+﻿@model Dev_Blog.Models.Post
+@using Dev_Blog.Utils;
+
+<div class="preview">
+    <div class="row">
+        <div class="col-2">
+            <div class="thumbnail-container">
+                @if (Model.ThumbnailPath != null)
+                {
+                    <div>
+                        <a asp-action="Details" asp-controller="Post" asp-route-postStub="@Model.Stub">
+                            <img src="@Model.ThumbnailPath" alt="Thumbnail for article '@Model.Title'" title="@Model.Title" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <a class="col" asp-action="Details" asp-controller="Post" asp-route-postStub="@Model.Stub">
+                    <h2>@Model.Title</h2>
+                </a>
+            </div>
+            <div class="row">
+                <h4 class="col-6">By @Model.Author.DisplayName</h4>
+                <h4 class="col-6"><time class="timeago" datetime="@Model.DatePublished.Value.ToString("s")" title="@Model.DatePublished.Value.ToLongDateString()">@Model.DatePublished.Value.ToLongDateString()</time></h4>
+            </div>
+            <div class="row">
+                <p class="col-6"><em>@Model.RawPreview(250)</em></p>
+            </div>
+            <div class="row">
+                <div class="tags col">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a asp-action="Index" asp-controller="Post" asp-route-tags="@tag.TagID" class="tag">#@tag.TagID</a>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>Views: </b> @NumberFormat.GetShortenedNumber(Model.Views)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

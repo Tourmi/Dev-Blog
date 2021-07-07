@@ -1,0 +1,82 @@
+﻿@model Dev_Blog.ViewModels.PostViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="Title" class="control-label"></label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+@if ((bool)ViewData["Create"])
+{
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="AutoGenerateStub" /> @Html.DisplayNameFor(model => model.AutoGenerateStub)
+        </label>
+    </div>
+    <div class="form-group">
+        <label asp-for="Stub" class="control-label"></label>
+
+        @if (Model.AutoGenerateStub)
+        {
+            <input asp-for="Stub" class="form-control stub" readonly />
+        }
+        else
+        {
+            <input asp-for="Stub" class="form-control stub" />
+        }
+        <span asp-validation-for="Stub" class="text-danger"></span>
+    </div>
+}
+else
+{
+    <div class="form-group form-check" title="Cannot modify the post's stub once created">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="AutoGenerateStub" disabled /> @Html.DisplayNameFor(model => model.AutoGenerateStub)
+        </label>
+    </div>
+    <div class="form-group" title="Cannot modify the post's stub once created">
+        <label asp-for="Stub" class="control-label"></label>
+        <input asp-for="Stub" class="form-control stub" readonly="@(true)" />
+        <span asp-validation-for="Stub" class="text-danger"></span>
+    </div>
+}
+<div class="form-group">
+    <label asp-for="Thumbnail" class="control-label"></label>
+    <input asp-for="Thumbnail" class="form-control" accept="image/*" />
+    <span asp-validation-for="Thumbnail" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Content" class="control-label"></label>
+    <textarea asp-for="Content" class="form-control post-content">@Model.Content</textarea>
+    <span asp-validation-for="Content" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="Publish" /> @Html.DisplayNameFor(model => model.Publish)
+    </label>
+</div>
+<div class="form-group form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="Schedule" /> @Html.DisplayNameFor(model => model.Schedule)
+    </label>
+</div>
+<div class="form-group">
+    <label asp-for="PublishDate" class="control-label"></label>
+    <input asp-for="PublishDate" class="form-control" />
+    <span asp-validation-for="PublishDate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Files" class="control-label"></label>
+    <input asp-for="Files" id="post-files" class="form-control" accept="audio/*, image/*" />
+    <span asp-validation-for="Files" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Tags" class="control-label"></label>
+    <select asp-for="Tags" class="form-control tag-selector-post" multiple>
+        @foreach (string tag in Model.Tags)
+        {
+            <option id="@tag" value="@tag" selected>@tag</option>
+        }
+    </select>
+    <span asp-validation-for="Tags" class="text-danger"></span>
+</div>

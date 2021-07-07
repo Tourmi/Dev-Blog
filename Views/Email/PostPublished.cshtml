@@ -1,0 +1,27 @@
+﻿@model Dev_Blog.ViewModels.Email.PostPublishedEmailViewModel
+
+@using Dev_Blog.Utils
+
+@{
+    Layout = "~/Views/Shared/_EmailLayout.cshtml";
+}
+
+<h1>Posts for you:</h1>
+
+<ul>
+    @foreach (var post in Model.Posts)
+    {
+        <li>
+            <h2>@Html.ActionLink(post.Title, "Details", "Post", new { postStub = post.Stub })</h2>
+            <h3>Published on @post.DatePublished.Value.Date</h3>
+            <p><em>@post.RawPreview()</em></p>
+        </li>
+    }
+</ul>
+
+
+@section Style {
+    <style>
+
+    </style>
+}

@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Dev_Blog.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <li class="nav-item">
+        <a id="bans" class="nav-link" asp-controller="Admin" asp-action="Ban" title="Bans">Bans</a>
+    </li>
+}

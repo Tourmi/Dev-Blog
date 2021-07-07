@@ -1,0 +1,78 @@
+﻿:root {
+    --bg-color: #F2FDFF;
+    --preview-bg-color: #e1ffec;
+    --nav-bg-color: #b4ffd0;
+    --nav-link-color: #045D62;
+    --text-color: #000F0F;
+    --text-color2: #F2FDFF;
+    --border-color: #95A8AB;
+    --border-color2: #b4ffd0;
+    --button-color: #013032;
+    --link-color: #045D62;
+    --link-visited-color: #045D62;
+    --disabled-color: #a1aeb1;
+    --error-text-color: #Af0000;
+    --form-background-color: #ecfffa;
+    --disabled-form-background-color: #92b6ac;
+    --disabled-form-text-color: #444;
+    /*----- shared colors ------*/
+    --dark-text: #000F0F;
+    --dark-link: #045D62;
+}
+
+.palette0 {
+    --bg-color: #F2FDFF;
+    --preview-bg-color: #e1ffec;
+    --nav-bg-color: #b4ffd0;
+    --nav-link-color: #045D62;
+    --text-color: #000F0F;
+    --text-color2: #F2FDFF;
+    --border-color: #95A8AB;
+    --border-color2: #b4ffd0;
+    --button-color: #013032;
+    --link-color: #045D62;
+    --link-visited-color: #045D62;
+    --disabled-color: #a1aeb1;
+    --error-text-color: #Af0000;
+    --form-background-color: #e1ffec;
+    --disabled-form-background-color: #92b6ac;
+    --disabled-form-text-color: #444;
+}
+
+.palette1 {
+    --bg-color: #000F0F;
+    --preview-bg-color: #013032;
+    --nav-bg-color: #045D62;
+    --nav-link-color: #b4ffd0;
+    --text-color: #F2FDFF;
+    --text-color2: #092327;
+    --border-color: #95A8AB;
+    --border-color2: #045D62;
+    --button-color: #b4ffd0;
+    --link-color: #b4ffd0;
+    --link-visited-color: #b4ffd0;
+    --disabled-color: #1b2c2c;
+    --error-text-color: #ff5555;
+    --form-background-color: #002323;
+    --disabled-form-background-color: #000505;
+    --disabled-form-text-color: #888;
+}
+
+.palette2 {
+    --bg-color: black;
+    --preview-bg-color: black;
+    --nav-bg-color: green;
+    --nav-link-color: black;
+    --text-color: green;
+    --text-color2: black;
+    --border-color: green;
+    --border-color2: black;
+    --button-color: green;
+    --link-color: green;
+    --link-visited-color: green;
+    --disabled-color: green;
+    --error-text-color: green;
+    --form-background-color: black;
+    --disabled-form-background-color: black;
+    --disabled-form-text-color: green;
+}

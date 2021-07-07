@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Dev_Blog.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Author")))
+{
+    <li class="nav-item">
+        <a id="manage" class="nav-link" asp-controller="PostAdmin" asp-action="Index" title="Posts">Posts Administration</a>
+    </li>
+}

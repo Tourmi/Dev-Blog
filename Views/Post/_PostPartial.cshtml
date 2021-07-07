@@ -1,0 +1,30 @@
+﻿@using Dev_Blog.Utils
+
+@model Dev_Blog.Models.Post
+
+
+<article class="post-article">
+    <header>
+        <h1>@Html.DisplayFor(model => model.Title)</h1>
+        @if (!ViewData.ContainsKey("ShowPublishedDate") || (bool)ViewData["ShowPublishedDate"])
+        {
+            <p>Posted by @Model.Author.DisplayName on @Model.DatePublished.Value.Year/@Model.DatePublished.Value.Month/@Model.DatePublished.Value.Day</p>
+        }
+        @if (@Model.DateModified != null)
+        {
+            <p>Last modified on @Model.DateModified.Value.Year/@Model.DateModified.Value.Month/@Model.DateModified.Value.Day</p>
+        }
+    </header>
+    <hr />
+    <div class="post" id="@Model.ID">
+        @Html.Raw(MarkdownParser.ParseString(Model.Content))
+    </div>
+    <footer>
+        <div class="tags">
+            @foreach (var tag in Model.Tags)
+            {
+                <a asp-action="Index" asp-controller="Post" asp-route-tags="@tag.TagID" class="tag">#@tag.TagID</a>
+            }
+        </div>
+    </footer>
+</article>

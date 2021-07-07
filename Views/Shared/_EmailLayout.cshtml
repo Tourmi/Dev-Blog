@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @RenderSection("Style", required: false)
+</head>
+<body>
+    <header>
+        <a title="@Dev_Blog.Utils.Constants.SiteName" class="title" asp-action="Index" asp-controller="Post">Tourmi<sup>dev</sup></a>
+    </header>
+
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="border-top footer text-muted">
+        <div>
+            @Dev_Blog.Utils.Constants.SiteName &copy; 2021 Tourmi
+        </div>
+
+        @Html.ActionLink("Edit subscription", "Edit", "Subscription", new { token = ViewData["token"] })
+        @Html.ActionLink("Unsubscribe", "Unsubscribe", "Subscription", new { token = ViewData["token"] })
+    </footer>
+</body>
+</html>

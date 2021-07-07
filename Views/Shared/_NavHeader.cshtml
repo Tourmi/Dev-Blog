@@ -1,0 +1,57 @@
+﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+    <div class="container">
+        <a title="Go to main page" class="navbar-brand unselectable" asp-action="Index" asp-controller="Post">Tourmi<sup>dev</sup></a>
+        <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="About" title="About">About</a>
+                </li>
+                <li class="nav-item">
+                    <a id="search-button" class="nav-link" href="#" title="Search">Search</a>
+                    <select id="search-input" class="tag-selector" multiple>
+                        @if (ViewData.ContainsKey("Tags"))
+                        {
+                            foreach (string tag in (string[])ViewData["Tags"])
+                            {
+                                <option id="@tag" value="@tag" selected>@tag</option>
+                            }
+                        }
+                    </select>
+                </li>
+                <partial name="~/Views/PostAdmin/_NavPartial.cshtml" />
+                <partial name="~/Views/Admin/_NavPartial.cshtml" />
+                <partial name="~/Views/Login/_NavPartial.cshtml" />
+                <partial name="~/Views/Subscription/_NavPartial.cshtml" />
+                <li class="nav-item">
+                    <a id="change-theme" class="nav-link" href="#" title="Change Theme">
+                        <i class="fas fa-lightbulb"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<script>
+    var baseURL = "@Url.ActionLink("Index", "Post")"
+
+    document.addEventListener('DOMContentLoaded', () => {
+        $("#search-button").click(function () {
+            var query = ""
+            if ($("#search-input").val() != "") {
+                query = "?tags=" + $("#search-input").val()
+            }
+            document.location = baseURL + query
+        })
+
+        $("#change-theme").click(function () {
+            const newId = (getPaletteId() + 1) % 2;
+            changePalette(newId);
+        })
+    })
+</script>

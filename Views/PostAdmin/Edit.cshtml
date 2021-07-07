@@ -1,0 +1,43 @@
+﻿@model Dev_Blog.ViewModels.PostViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Create"] = false;
+}
+
+<h1>Edit post</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            @Html.HiddenFor(model => model.ID)
+            <partial name="_PostViewModelEditor" model="Model" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<button class="btn btn-secondary" id="update-preview">Update preview</button>
+<h4>Preview</h4>
+<div class="row">
+    <div id="post-preview" class="col-md-12">
+        @Html.Raw(Dev_Blog.Utils.MarkdownParser.ParseString(Model.Content))
+    </div>
+</div>
+<hr />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>var startRef = @ViewData["FileCount"];</script>
+    <environment include="Development">
+        <script src="~/js/postAdmin.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/admin.min.js" asp-append-version="true"></script>
+    </environment>
+}

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Dev_Blog.Models.Ban>
+
+@{
+    ViewData["Title"] = "Ban list";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>View</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Currently banned?</th>
+            <th>
+                @Html.DisplayNameFor(model => model.IpAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@(item.CurrentlyBanned ? "Yes": "No")</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @if (item.CurrentlyBanned)
+                {
+                    <form asp-action="Unban" asp-route-id="@item.ID">
+                        <button type="submit">Unban</button>
+                    </form>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

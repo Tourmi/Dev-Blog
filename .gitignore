@@ -31,3 +31,6 @@ msbuild.wrn
 wwwroot/lib/
 
 .vs/
+wwwroot/img/blogpost/
+wwwroot/audio/blogpost/
+*.min.*
