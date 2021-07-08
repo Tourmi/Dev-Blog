@@ -4,6 +4,7 @@
     "inputFiles": [
       "wwwroot/css/site.css",
       "wwwroot/css/palettes.css",
+      "wwwroot/css/sidebar.css",
       "wwwroot/css/select2.css"
     ]
   },
