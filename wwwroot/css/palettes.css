@@ -15,6 +15,8 @@
     --form-background-color: #ecfffa;
     --disabled-form-background-color: #92b6ac;
     --disabled-form-text-color: #444;
+
+    --lighten-darken: brightness(70%);
     /*----- shared colors ------*/
     --dark-text: #000F0F;
     --dark-link: #045D62;

@@ -5,6 +5,7 @@
       "wwwroot/css/site.css",
       "wwwroot/css/palettes.css",
       "wwwroot/css/sidebar.css",
+      "wwwroot/css/nav.css",
       "wwwroot/css/select2.css"
     ]
   },

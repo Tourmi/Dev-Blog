@@ -6,7 +6,8 @@
     ViewData["ShowMetaLogo"] = false;
 }
 
-@section OpenGraph {
+@section Meta {
+    <meta name="description" content="@Dev_Blog.Utils.PostExtensions.RawPreview(Model, 180)" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="@(Dev_Blog.Utils.Constants.PublicUrl + "/post/" + Model.Stub)" />
     <meta property="og:title" content="@Model.Title" />
@@ -32,7 +33,8 @@
 }
 
 <partial name="_PostPartial" model="Model" />
-<h3>Comments (@Model.Comments.Where(c => !c.Deleted).Count()):</h3>
+<h2>Comments (@Model.Comments.Where(c => !c.Deleted).Count()):</h2>
+<hr />
 <div class="comments">
     @if (Model.Comments.Any())
     {

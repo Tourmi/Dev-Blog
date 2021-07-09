@@ -1,12 +1,26 @@
-﻿.select2 {
-    display: inline-block;
+﻿.navbar .select2 {
+    width: unset !important;
+    flex-grow: 100;
+
 }
 
-    .select2-container .select2-selection {
-        background-color: var(--form-background-color);
-        color: var(--dark-text);
-        transition: color ease 0.5s, background-color ease 0.5s;
-    }
+.select2 {
+    display: inline-block;
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.select2-container .select2-selection {
+    background-color: var(--form-background-color);
+    color: var(--text-color);
+    border-color: var(--border-color) !important;
+    transition: color ease 0.5s, background-color ease 0.5s;
+}
+
+.select2-container .select2-selection input{
+    color: var(--text-color) !important;
+    transition: color ease 0.5s;
+}
 
 .select2-container:disabled .select2-selection, .select2-container--disabled .select2-selection {
     background-color: var(--disabled-form-background-color) !important;
@@ -39,5 +53,5 @@
 }
 
 .select2-selection.select2-selection--multiple ul {
-    overflow:hidden;
+    overflow: hidden;
 }

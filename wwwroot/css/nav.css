@@ -1,0 +1,31 @@
+﻿.navbar {
+    border-bottom: solid 2px var(--border-color);
+    background-color: var(--nav-bg-color);
+    transition: background-color ease 0.5s;
+}
+
+    .navbar .nav-link {
+        display: inline-block;
+        color: var(--nav-link-color);
+        transition: color ease 0.5s;
+    }
+
+        .navbar .nav-link:visited {
+            color: var(--nav-link-color);
+        }
+
+        .navbar .nav-link:hover {
+            color: var(--nav-link-color);
+            filter: brightness(70%);
+        }
+
+    .navbar a.navbar-brand {
+        white-space: normal;
+        text-align: center;
+        word-break: break-all;
+    }
+
+    .navbar .navbar-toggler {
+        color: var(--nav-link-color);
+        transition: color ease 0.5s;
+    }
