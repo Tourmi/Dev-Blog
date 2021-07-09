@@ -10,12 +10,17 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" asp-route-token="@Model.Token">
+        <form id="subscribeForm" asp-action="Edit" asp-route-token="@Model.Token">
             <partial name="_SubscriptionViewModelEditor" model="Model" />
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+            <p class="small">
+                This site is protected by reCAPTCHA and the Google
+                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+            </p>
         </form>
     </div>
 </div>
@@ -23,15 +28,15 @@
 
 @section Scripts {
     <script>
-        var subscribedTo;
-
+        var tags;
+        const siteKey = "@ViewData["recaptcha-public-key"]"
         function onSubscribeAllChanged(element) {
-            subscribedTo.prop("disabled", element.is(":checked"));
+            tags.prop("disabled", element.is(":checked"));
         }
 
         $(document).ready(function () {
             var subscribeToAll = $("input[name='SubscribedToAll']");
-            subscribedTo = $("select[name='SubscribedTo']");
+            tags = $("select[name='Tags']");
             subscribeToAll.change(function () {
                 onSubscribeAllChanged($(this));
             });
@@ -39,4 +44,7 @@
             onSubscribeAllChanged(subscribeToAll);
         });
     </script>
+    <environment include="Development">
+        <script src="~/js/subscribe.js" asp-append-version="true"></script>
+    </environment>
 }

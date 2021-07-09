@@ -1,4 +1,5 @@
-﻿using Dev_Blog.Data;
+﻿using Dev_Blog.Config;
+using Dev_Blog.Data;
 using Dev_Blog.Models;
 using Dev_Blog.Services;
 using Dev_Blog.Utils;
@@ -7,6 +8,7 @@ using Dev_Blog.ViewModels.Email;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,28 +21,36 @@ namespace Dev_Blog.Controllers
         private readonly ILogger logger;
         private readonly EmailSchedulerService emailScheduler;
         private readonly BlogDBContext context;
+        private readonly IOptions<ReCaptchaConfig> reCaptchaConfig;
 
-        public SubscriptionController(BlogDBContext context, EmailSchedulerService emailScheduler, ILogger<SubscriptionController> logger)
+        public SubscriptionController(BlogDBContext context, EmailSchedulerService emailScheduler, IOptions<ReCaptchaConfig> reCaptchaConfig, ILogger<SubscriptionController> logger)
         {
             this.context = context;
             this.emailScheduler = emailScheduler;
             this.logger = logger;
+            this.reCaptchaConfig = reCaptchaConfig;
         }
 
         [HttpGet("/subscription/validate")]
         public IActionResult Validate(string email)
         {
             logger.LogTrace("GET: Subscription, ValidateEmail, email = {email}", email);
+            ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
 
             ViewData["Email"] = email;
             return View();
         }
 
         [HttpPost("/subscription/validate")]
-        public async Task<IActionResult> ValidateEmail(string token, string email)
+        public async Task<IActionResult> Validate(string token, string email, string reCaptchaResponse)
         {
             logger.LogTrace("POST: Subscription, ValidateEmail, token = {token}, email = {email}", token, email);
-
+            if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, reCaptchaResponse))
+            {
+                ModelState.AddModelError("", "The reCAPTCHA was invalid!");
+                ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
+                return View();
+            }
             return await ValidateEmail(token.Trim());
         }
 
@@ -72,6 +82,7 @@ namespace Dev_Blog.Controllers
         public IActionResult Create()
         {
             logger.LogTrace("GET: Subscription, Create");
+            ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
 
             SubscriptionViewModel viewModel = new SubscriptionViewModel
             {
@@ -86,6 +97,11 @@ namespace Dev_Blog.Controllers
         {
             logger.LogTrace("POST: Subscription, Create");
 
+            if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, viewModel.ReCaptchaResponse))
+            {
+                ModelState.AddModelError("", "The reCAPTCHA was invalid!");
+            }
+
             if (string.IsNullOrWhiteSpace(viewModel.Email))
             {
                 ModelState.AddModelError("Email", "An email is required!");
@@ -98,6 +114,7 @@ namespace Dev_Blog.Controllers
 
             if (!ModelState.IsValid)
             {
+                ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
                 return View(viewModel);
             }
 
@@ -160,6 +177,8 @@ namespace Dev_Blog.Controllers
                 .Include(s => s.SubscribedTo)
                 .SingleOrDefaultAsync();
 
+            ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
+
             SubscriptionViewModel viewModel = new SubscriptionViewModel()
             {
                 Token = sub.ValidationToken,
@@ -175,6 +194,11 @@ namespace Dev_Blog.Controllers
         public async Task<IActionResult> Edit(string token, SubscriptionViewModel viewModel)
         {
             logger.LogTrace("POST: Subscription, Edit, token = {token}", token);
+
+            if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, viewModel.ReCaptchaResponse))
+            {
+                ModelState.AddModelError("", "The reCAPTCHA was invalid!");
+            }
 
             if (!ModelState.IsValid)
             {

@@ -49,7 +49,7 @@ namespace Dev_Blog.Models
         public ICollection<Comment> Comments { get; set; }
 
         [NotMapped]
-        public bool Deleted => DateDeleted != null || (ParentComment != null && ParentComment.Deleted);
+        public bool Deleted => DateDeleted != null;
         [NotMapped]
         public bool AreAllChildrenDeleted
         {

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Dev_Blog.Config;
 using Dev_Blog.Data;
 using Dev_Blog.Models;
+using Dev_Blog.Utils;
 using Dev_Blog.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Dev_Blog.Controllers
 {
@@ -18,11 +21,13 @@ namespace Dev_Blog.Controllers
     {
         private readonly ILogger<LoginController> logger;
         private readonly SignInManager<User> signInManager;
+        private readonly IOptions<ReCaptchaConfig> reCaptchaConfig;
 
-        public LoginController(ILogger<LoginController> logger, SignInManager<User> signInManager)
+        public LoginController(ILogger<LoginController> logger, SignInManager<User> signInManager, IOptions<ReCaptchaConfig> reCaptchaConfig)
         {
             this.logger = logger;
             this.signInManager = signInManager;
+            this.reCaptchaConfig = reCaptchaConfig;
         }
 
         [HttpGet("/login")]
@@ -30,6 +35,7 @@ namespace Dev_Blog.Controllers
         {
             logger.LogTrace("GET: Login, LogIn");
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
             return View();
         }
 
@@ -39,8 +45,14 @@ namespace Dev_Blog.Controllers
             logger.LogTrace("POST: Login, LogIn");
             returnUrl ??= Url.Content("~/");
 
+            if (!ReCaptchaValidator.ReCaptchaPassed(reCaptchaConfig.Value.ReCaptchaSecretKey, loginViewModel.ReCaptchaResponse))
+            {
+                ModelState.AddModelError("", "The reCAPTCHA was invalid!");
+            }
+
             if (!ModelState.IsValid)
             {
+                ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
                 return View(loginViewModel);
             }
             var result = await signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, loginViewModel.RememberMe, true);

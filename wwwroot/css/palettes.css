@@ -39,6 +39,8 @@
     --form-background-color: #e1ffec;
     --disabled-form-background-color: #92b6ac;
     --disabled-form-text-color: #444;
+    --lighten-darken: brightness(70%);
+    --darken-lighten: brightness(130%);
 }
 
 .palette1 {
@@ -58,6 +60,8 @@
     --form-background-color: #002323;
     --disabled-form-background-color: #000505;
     --disabled-form-text-color: #888;
+    --lighten-darken: brightness(130%);
+    --darken-lighten: brightness(70%);
 }
 
 .palette2 {
@@ -77,4 +81,6 @@
     --form-background-color: black;
     --disabled-form-background-color: black;
     --disabled-form-text-color: green;
+    --lighten-darken: brightness(130%);
+    --darken-lighten: brightness(70%);
 }

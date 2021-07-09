@@ -6,12 +6,10 @@
 }
 
 <h1>Log in</h1>
-
-<h4>LoginViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="LogIn" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+        <form asp-action="LogIn" asp-route-returnUrl="@ViewData["ReturnUrl"]" id="loginForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
@@ -28,9 +26,40 @@
                     <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
                 </label>
             </div>
+            <input asp-for="ReCaptchaResponse" />
             <div class="form-group">
-                <input type="submit" value="Log In" class="btn btn-primary" />
+                <input type="submit" value="Log In" class="btn btn-primary recaptcha" />
             </div>
+            <p class="small">
+                This site is protected by reCAPTCHA and the Google
+                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+            </p>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const siteKey = "@ViewData["recaptcha-public-key"]"
+        document.addEventListener('DOMContentLoaded', () => {
+            $("#loginForm .recaptcha").click(function (e) {
+                var form = $("#loginForm");
+                if (!form.valid()) {
+                    return;
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                grecaptcha.ready(function () {
+                    grecaptcha.execute(siteKey, { action: "submit" }).then(function (token) {
+                        document.getElementsByName("ReCaptchaResponse")[0].value = token;
+                        $("#loginForm").submit();
+                    });
+                });
+            });
+        });
+    </script>
+}

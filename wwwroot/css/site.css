@@ -19,12 +19,16 @@ a {
 
     a:hover {
         color: var(--link-visited-color);
-        filter: brightness(70%);
+        filter: var(--darken-lighten);
     }
 
     a:visited {
         color: var(--link-visited-color);
     }
+
+.grecaptcha-badge {
+    visibility: hidden;
+}
 
 h1, h2, h3, h4, h5, h6 {
     color: var(--link-color);
@@ -59,29 +63,29 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 
-.form-group .btn.btn-primary {
-    color: var(--text-color2);
-    background-color: var(--button-color);
-    border-color: var(--border-color);
+.btn.btn-primary {
+    color: var(--text-color2) !important;
+    background-color: var(--button-color) !important;
+    border-color: var(--border-color) !important;
     transition: background-color ease 0.5s, border-color ease 0.5s;
 }
 
-    .form-group .btn.btn-primary:hover {
-        color: var(--text-color2);
-        background-color: var(--button-color);
-        border-color: var(--border-color);
-        filter: brightness(80%);
+    .btn.btn-primary:hover {
+        color: var(--text-color2) !important;
+        background-color: var(--button-color) !important;
+        border-color: var(--border-color) !important;
+        filter: var(--darken-lighten);
     }
 
-    .form-group .btn.btn-primary:active {
-        color: var(--text-color2);
-        filter: brightness(120%);
-        background-color: var(--button-color);
-        border-color: var(--border-color);
+    .btn.btn-primary:active {
+        color: var(--text-color2) !important;
+        filter: var(--lighten-darken);
+        background-color: var(--button-color) !important;
+        border-color: var(--border-color) !important;
     }
 
-        .form-group .btn.btn-primary:active:focus, .form-group .btn.btn-primary:focus {
-            box-shadow: 0 0 0 0.2rem var(--border-color2);
+        .btn.btn-primary:active:focus, .btn.btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem var(--border-color2) !important;
         }
 
 .page-item a.page-link {
@@ -251,7 +255,7 @@ a.tag {
 
     a.tag:hover {
         text-decoration: none;
-        filter: brightness(120%);
+        filter: var(--lighten-darken);
     }
 
 .thumbnail-container {
@@ -283,6 +287,11 @@ p.group {
     text-align: center;
 }
 
+.comment {
+    border: 1px solid var(--border-color);
+    border-radius:20px;
+}
+
 .comment-children {
     margin-left: 5%;
 }
@@ -297,6 +306,7 @@ p.group {
 
 .verified {
     cursor: default;
+    color: var(--link-color);
 }
 
 #search-input {

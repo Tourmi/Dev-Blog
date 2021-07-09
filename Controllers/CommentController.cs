@@ -106,6 +106,7 @@ namespace Dev_Blog.Controllers
 
             if (!ModelState.IsValid)
             {
+                ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
                 return View(viewModel);
             }
 

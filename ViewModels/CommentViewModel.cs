@@ -14,14 +14,15 @@ namespace Dev_Blog.ViewModels
         }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(20)]
+        [MinLength(3, ErrorMessage = "The minimum length is three characters")]
+        [MaxLength(20, ErrorMessage = "The maximum length is 20 characters")]
         [RegularExpression(@"^[-_a-zA-Z0-9]+$", ErrorMessage = "The name should only contain alphanumeric characters, dashes and underscores.")]
         public string Name { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
         [Required]
         [HiddenInput]
         public string ReCaptchaResponse { get; set; }
