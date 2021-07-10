@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -17,5 +18,8 @@ namespace Dev_Blog.ViewModels
         public string Password { get; set; }
         [DisplayName("Remember me")]
         public bool RememberMe { get; set; }
+        [Required]
+        [HiddenInput]
+        public string ReCaptchaResponse { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace Dev_Blog.Utils
     /// <para> - Bold and italics cannot be done with underscores, only asterisks (*)</para>
     /// <para> - Strikethrough text is done by surrounding it with tildes (~)</para>
     /// <para> - Underlined text is done by surrounding it with underscores (_)</para>
+    /// <para> - You can insert font-awesome icons with $[alt text](fa-car)</para>
     /// </summary>
     public static class MarkdownParser
     {
@@ -70,6 +71,7 @@ namespace Dev_Blog.Utils
             markdown = parseCodeBlock(markdown);
             markdown = parseCode(markdown);
             markdown = parseReferences(markdown);
+            markdown = parseFontAwesome(markdown);
             markdown = parseImages(markdown);
             markdown = parseSounds(markdown);
             markdown = parseYoutubeEmbed(markdown);
@@ -138,7 +140,7 @@ namespace Dev_Blog.Utils
                 newMarkdown = newMarkdown.Remove(index, toRemove);
 
                 //It's important to escape the link so it no longer matches the regex
-                string embedUrl = $"https://www.youtube.com/embed/{match.Groups[5].Value}".EscapeMarkdownChars();
+                string embedUrl = $"https://www.youtube.com/embed/{match.Groups[5].Value}".EscapeAllMarkdownChars();
                 string embed = $"<iframe type=\"text/html\" src=\"{embedUrl}\"></iframe>";
 
                 newMarkdown = newMarkdown.Insert(index, $"<span class=\"ytplayer\">{embed}</span>");
@@ -167,8 +169,10 @@ namespace Dev_Blog.Utils
 
                 newMarkdown = newMarkdown.Remove(index, toRemove);
 
-                string href = $" href=\"{match.Groups[2].Value.EscapeMarkdownChars()}\"";
-                string linkText = match.Groups[2].Value.EscapeMarkdownChars();
+                string matchText = match.Groups[2].Value.EscapeAllMarkdownChars();
+
+                string href = $" href=\"{matchText}\"";
+                string linkText = matchText;
 
                 newMarkdown = newMarkdown.Insert(index, $"<a{href}>{linkText}</a>");
 
@@ -190,8 +194,10 @@ namespace Dev_Blog.Utils
 
                 newMarkdown = newMarkdown.Remove(index, toRemove);
 
-                string href = $" href=\"mailto:{match.Value.EscapeMarkdownChars()}\"";
-                string linkText = match.Value.EscapeMarkdownChars();
+                string matchText = match.Value.EscapeAllMarkdownChars();
+
+                string href = $" href=\"mailto:{matchText}\"";
+                string linkText = matchText;
 
                 newMarkdown = newMarkdown.Insert(index, $"<a{href}>{linkText}</a>");
 
@@ -221,17 +227,40 @@ namespace Dev_Blog.Utils
                 {
                     link = "mailto:" + link;
                 }
-                string href = $" href=\"{link.EscapeMarkdownChars()}\"";
-                string linkText = match.Groups[3].Value.EscapeMarkdownChars();
+                string href = $" href=\"{link.EscapeAllMarkdownChars()}\"";
+                string linkText = match.Groups[3].Value.EscapeLinks();
                 string title = "";
                 if (addTitle)
                 {
-                    title = $" title=\"{match.Groups[6].Value.EscapeMarkdownChars()}\"";
+                    title = $" title=\"{match.Groups[6].Value.EscapeAllMarkdownChars()}\"";
                 }
 
                 newMarkdown = newMarkdown.Insert(index, $"<a{href}{title}>{linkText}</a>");
 
 
+                match = regex.Match(newMarkdown);
+            }
+
+            return newMarkdown;
+        }
+
+        private static string parseFontAwesome(string markdown)
+        {
+            string newMarkdown = markdown;
+            Regex regex = new Regex(@"([^\\]|^)(\$\[(.*?)\]\((.*?)\))");
+            Match match = regex.Match(newMarkdown);
+            while (match.Success)
+            {
+                int index = match.Groups[2].Index;
+                int toRemove = match.Groups[2].Length;
+
+                newMarkdown = newMarkdown.Remove(index, toRemove);
+
+                string src = $"{match.Groups[4].Value.EscapeImportantMarkdownChars()}";
+                string alt = $" aria-label=\"{match.Groups[3].Value.EscapeImportantMarkdownChars()}\"";
+                string title = $" title=\"{match.Groups[3].Value.EscapeImportantMarkdownChars()}\"";
+
+                newMarkdown = newMarkdown.Insert(index, $"<i class=\"{src}\"{alt}{title}></i>");
                 match = regex.Match(newMarkdown);
             }
 
@@ -252,12 +281,12 @@ namespace Dev_Blog.Utils
 
                 newMarkdown = newMarkdown.Remove(index, toRemove);
 
-                string src = $" src=\"{match.Groups[4].Value.EscapeMarkdownChars()}\"";
-                string alt = $" alt=\"{match.Groups[3].Value.EscapeMarkdownChars()}\"";
+                string src = $" src=\"{match.Groups[4].Value.EscapeAllMarkdownChars()}\"";
+                string alt = $" alt=\"{match.Groups[3].Value.EscapeAllMarkdownChars()}\"";
                 string title = "";
                 if (addTitle)
                 {
-                    title = $" title=\"{match.Groups[6].Value.EscapeMarkdownChars()}\"";
+                    title = $" title=\"{match.Groups[6].Value.EscapeAllMarkdownChars()}\"";
                 }
 
                 newMarkdown = newMarkdown.Insert(index, $"<img{src}{alt}{title}/>");
@@ -280,8 +309,8 @@ namespace Dev_Blog.Utils
 
                 newMarkdown = newMarkdown.Remove(index, toRemove);
 
-                string src = $" src=\"{match.Groups[4].Value.EscapeMarkdownChars()}\"";
-                string ariaLabel = $" aria-label=\"{match.Groups[3].Value.EscapeMarkdownChars()}\"";
+                string src = $" src=\"{match.Groups[4].Value.EscapeAllMarkdownChars()}\"";
+                string ariaLabel = $" aria-label=\"{match.Groups[3].Value.EscapeAllMarkdownChars()}\"";
 
                 newMarkdown = newMarkdown.Insert(index, $"<audio {ariaLabel} controls><source{src}/></audio>");
                 match = regex.Match(newMarkdown);
@@ -369,7 +398,7 @@ namespace Dev_Blog.Utils
                     continue;
                 }
 
-                string newLine = line.Substring(match.Groups[1].Value.Length);
+                string newLine = line[match.Groups[1].Value.Length..];
                 if (itemTag != null)
                 {
                     newLine = $"<{itemTag}>{newLine}</{itemTag}>";
@@ -403,12 +432,12 @@ namespace Dev_Blog.Utils
             {
                 if (line.StartsWith(currHeader))
                 {
-                    line = line.Substring(currHeader.Length);
+                    line = line[currHeader.Length..];
 
                     return $"</p><h{currHeader.Length - 1}>{line}</h{currHeader.Length - 1}><p>";
                 }
                 //Remove one #
-                currHeader = currHeader.Substring(1);
+                currHeader = currHeader[1..];
             } while (currHeader.Length > 1);
 
             return line;
@@ -455,7 +484,7 @@ namespace Dev_Blog.Utils
                 }
                 if (open && escapeContent)
                 {
-                    group = group.EscapeMarkdownChars();
+                    group = group.EscapeAllMarkdownChars();
                 }
                 newMarkdown += group + (open ? $"</{htmlTag}>" : $"<{htmlTag}>");
                 open = !open;
@@ -464,23 +493,36 @@ namespace Dev_Blog.Utils
             return newMarkdown;
         }
 
-        public static string EscapeMarkdownChars(this string markdown) => markdown.Escape("\\")
-                                                                                  .Escape("*")
-                                                                                  .Escape("`")
-                                                                                  .Escape("~")
-                                                                                  .Escape("-")
-                                                                                  .Escape("#")
-                                                                                  .Escape("+")
-                                                                                  .Escape("1")
-                                                                                  .Escape("_")
-                                                                                  .Escape("h")
-                                                                                  .Escape("[")
-                                                                                  .Escape("!")
-                                                                                  .Escape("?")
-                                                                                  .Escape("@")
-                                                                                  .Escape(".");
+        public static string EscapeMarkdown(this string markdown, params string[] toEscape)
+        {
+            foreach (string val in toEscape)
+            {
+                markdown = markdown.Escape(val);
+            }
 
-        public static string Escape(this string markdown, string charToEscape) => markdown.Replace(charToEscape, "\\" + charToEscape);
+            return markdown;
+        }
+
+        public static string EscapeAllMarkdownChars(this string markdown) => markdown.EscapeMarkdown(@"\", "*", "`", "~", "-", "#", "+", "1", "_", "h", "[", "!", "?", "@", ".");
+        public static string EscapeLinks(this string markdown) => markdown.EscapeMarkdown("@", "h", ".");
+        public static string EscapeImportantMarkdownChars(this string markdown) => markdown.EscapeMarkdown(@"\", "*", "`", "~", "#", "+", "_", "[", "!", "?", "@", ".");
+
+        public static string Escape(this string markdown, string charToEscape)
+        {
+
+            Regex regex = new Regex(@$"(\\*){(@".$^{[(|)*+?\".Contains(charToEscape) ? @"\" : "")}{charToEscape}", RegexOptions.RightToLeft);
+
+            var matches = regex.Matches(markdown);
+            foreach (Match match in matches)
+            {
+                if (!isEscaped(match.Groups[1].Value))
+                {
+                    markdown = markdown.Insert(match.Index, @"\");
+                }
+            }
+
+            return markdown;
+        }
 
         private static string parseBold(string markdown)
         {

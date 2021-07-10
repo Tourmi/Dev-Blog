@@ -182,6 +182,7 @@ namespace Dev_Blog.Controllers
 
         // POST: PostAdmin/Edit/5
         [HttpPost]
+        [RequestSizeLimit(Int32.MaxValue)]
         public ActionResult Edit(long id, PostViewModel viewModel)
         {
             logger.LogTrace("GET: PostAdmin, Edit, id = {id}", id);

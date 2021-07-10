@@ -7,6 +7,7 @@ using Dev_Blog.Data;
 using Dev_Blog.Models;
 using Dev_Blog.Services;
 using Dev_Blog.Utils;
+using Dev_Blog.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -71,7 +72,10 @@ namespace Dev_Blog.Controllers
 
             posts = posts.Skip((currPage.Value - 1) * postsPerPage).Take(postsPerPage);
 
-            result.Data = posts;
+            result.Data = await posts.ToListAsync();
+
+            ViewData["PopularPosts"] = await getValidPosts().OrderByDescending(p => p.Views).Take(10).Select(p => new MinPostViewModel() { ID = p.ID, PublishDate = p.DatePublished.Value, Stub = p.Stub, Title = p.Title }).ToListAsync();
+            ViewData["PostList"] = await getValidPosts().OrderByDescending(p => p.DatePublished).Select(p => new MinPostViewModel() { ID = p.ID, PublishDate = p.DatePublished.Value, Stub = p.Stub, Title = p.Title }).ToListAsync();
 
             return View(result);
         }
@@ -119,6 +123,6 @@ namespace Dev_Blog.Controllers
             return posts;
         }
 
-       
+
     }
 }

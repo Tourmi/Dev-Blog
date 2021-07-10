@@ -3,38 +3,118 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool showPagination = Model.TotalPages > 1;
 }
 
-
-<section class="container">
-    @if (!Model.Data.Any())
-    {
-        <h2>No posts were found</h2>
-    }
-    else
-    {
-        @foreach (Dev_Blog.Models.Post post in Model.Data)
+<div class="row">
+    <section class="col col-12 col-lg-9">
+        @if (!Model.Data.Any())
         {
-            <partial name="_Preview" model="post" />
+            <h2>No posts were found</h2>
         }
-    }
-    @if (Model.TotalPages > 1)
+        else
+        {
+            @foreach (Dev_Blog.Models.Post post in Model.Data)
+            {
+                <partial name="_Preview" model="post" />
+            }
+        }
+    </section>
+    @if (showPagination)
     {
-        <p>Page @Model.CurrentPage of @Model.TotalPages</p>
-        <ul class="pagination">
-            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="1" asp-route-tags="@ViewData["TagList"]" class="page-link">First</a>
-            </li>
-            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage - 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Previous</a>
-            </li>
-            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage + 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Next</a>
-            </li>
-            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
-                <a asp-area="" asp-action="" asp-route-currPage="@Model.TotalPages" asp-route-tags="@ViewData["TagList"]" class="page-link">Last</a>
-            </li>
-        </ul>
+        <div class="col col-12 order-lg-12" )">
+            <p>Page @Model.CurrentPage of @Model.TotalPages</p>
+            <ul class="pagination">
+                <li class="page-item unselectable @(Model.CurrentPage == 1 ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="1" asp-route-tags="@ViewData["TagList"]" class="page-link">First</a>
+                </li>
+                <li class="page-item unselectable @(Model.CurrentPage == 1 ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage - 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Previous</a>
+                </li>
+                <li class="page-item unselectable @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="@(Model.CurrentPage + 1)" asp-route-tags="@ViewData["TagList"]" class="page-link">Next</a>
+                </li>
+                <li class="page-item unselectable @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                    <a asp-area="" asp-action="" asp-route-currPage="@Model.TotalPages" asp-route-tags="@ViewData["TagList"]" class="page-link">Last</a>
+                </li>
+            </ul>
+        </div>
     }
 
-</section>
+    @if (ViewData.ContainsKey("PopularPosts") || ViewData.ContainsKey("PostList"))
+    {
+        <aside class="col col-12 col-lg-3 @(showPagination ? "order-lg-1" : "") pl-lg-0">
+            <div class="sidebar-content">
+                @if (ViewData.ContainsKey("PopularPosts"))
+                {
+                    <div id="popular-posts">
+                        <h4>Popular posts</h4>
+                        <ul>
+                            @foreach (var post in (IEnumerable<MinPostViewModel>)ViewData["PopularPosts"])
+                            {
+                                <li>
+                                    <a href="/post/@post.Stub">
+                                        <i class="fas fa-arrow-right fa-fw"></i>
+                                        &nbsp;@post.Title
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    @if (ViewData.ContainsKey("PostList"))
+                    {
+                        <hr />
+                    }
+                }
+                @if (ViewData.ContainsKey("PostList"))
+                {
+                    <div id="post-archive">
+                        <h4>Post archive</h4>
+                        <ul>
+                            @foreach (var postYear in ((IEnumerable<MinPostViewModel>)ViewData["PostList"]).GroupBy(p => p.PublishDate.Year))
+                            {
+                                int year = postYear.First().PublishDate.Year;
+                                <li>
+                                    <h5>
+                                        <a data-toggle="collapse" href="#posts@(year)" role="button" aria-expanded="false" aria-controls="posts@(year)">
+                                            <i class="fas fa-chevron-down fa-fw"></i>
+                                            <i class="fas fa-chevron-right fa-fw"></i>
+                                            &nbsp;@year
+                                        </a>
+                                    </h5>
+                                    <ul class="collapse" id="posts@(year)">
+                                        @foreach (var postMonth in postYear.GroupBy(p => p.PublishDate.Month))
+                                        {
+                                            string month = postMonth.First().PublishDate.ToString("MMMM");
+                                            <li>
+                                                <h6>
+                                                    <a data-toggle="collapse" href="#posts@(month)@(year)" role="button" aria-expanded="true" aria-controls="posts@(month)@(year)">
+                                                        <i class="fas fa-chevron-down fa-fw"></i>
+                                                        <i class="fas fa-chevron-right fa-fw"></i>
+                                                        &nbsp;@month @year
+                                                    </a>
+                                                </h6>
+                                                <ul class="collapse show" id="posts@(month)@(year)">
+                                                    @foreach (var post in postMonth)
+                                                    {
+                                                        <li>
+                                                            <a href="/post/@post.Stub">
+                                                                <i class="fas fa-arrow-right"></i>
+                                                                &nbsp;@post.Title
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        </aside>
+    }
+
+</div>

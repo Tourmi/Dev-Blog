@@ -4,9 +4,11 @@
     ViewData["Title"] = "About";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["ShowPublishedDate"] = false;
+    ViewData["ShowMetaLogo"] = false;
 }
 
-@section OpenGraph {
+@section Meta {
+    <meta name="description" content="@Dev_Blog.Utils.PostExtensions.RawPreview(Model, 180)" />
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="@(Dev_Blog.Utils.Constants.PublicUrl + "/about")" />
     <meta property="og:title" content="@Model.Title" />

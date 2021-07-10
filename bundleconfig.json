@@ -4,6 +4,8 @@
     "inputFiles": [
       "wwwroot/css/site.css",
       "wwwroot/css/palettes.css",
+      "wwwroot/css/sidebar.css",
+      "wwwroot/css/nav.css",
       "wwwroot/css/select2.css"
     ]
   },
@@ -11,7 +13,8 @@
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js",
-      "wwwroot/js/post.js"
+      "wwwroot/js/post.js",
+      "wwwroot/js/subscribe.js"
     ],
     "minify": {
       "enabled": true,

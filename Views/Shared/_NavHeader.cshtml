@@ -1,18 +1,18 @@
-﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+﻿<nav class="navbar navbar-expand-md navbar-toggleable-md">
     <div class="container">
-        <a title="Go to main page" class="navbar-brand unselectable" asp-action="Index" asp-controller="Post">Tourmi<sup>dev</sup></a>
-        <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <a title="Go to main page" class="navbar-brand nav-link unselectable" asp-action="Index" asp-controller="Post" aria-label="Tourmi dev">Tourmi<sup>dev</sup></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <div class="navbar-collapse collapse d-md-inline-flex flex-md-row-reverse">
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
                     <a class="nav-link" asp-action="Index" asp-controller="About" title="About">About</a>
                 </li>
-                <li class="nav-item">
-                    <a id="search-button" class="nav-link" href="#" title="Search">Search</a>
-                    <select id="search-input" class="tag-selector" multiple>
+                <li class="nav-item d-inline-flex flex-grow-1">
+                    <a id="search-button" class="nav-link pr-3" href="#" title="Search">Search</a>
+                    <select id="search-input" class="tag-selector m-3" multiple>
                         @if (ViewData.ContainsKey("Tags"))
                         {
                             foreach (string tag in (string[])ViewData["Tags"])
@@ -26,7 +26,7 @@
                 <partial name="~/Views/Admin/_NavPartial.cshtml" />
                 <partial name="~/Views/Login/_NavPartial.cshtml" />
                 <partial name="~/Views/Subscription/_NavPartial.cshtml" />
-                <li class="nav-item">
+                <li class="nav-item pr-md-3">
                     <a id="change-theme" class="nav-link" href="#" title="Change Theme">
                         <i class="fas fa-lightbulb"></i>
                     </a>

@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Edit">
+        <form asp-action="Edit" asp-controller="PostAdmin" enctype="multipart/form-data">
             @Html.HiddenFor(model => model.ID)
             <partial name="_PostViewModelEditor" model="Model" />
             <div class="form-group">

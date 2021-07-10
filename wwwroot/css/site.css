@@ -1,57 +1,38 @@
-﻿a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
+﻿html {
+    font-size: 14px;
 }
 
-.navbar-toggler {
-    color: var(--text-color);
-    transition: color ease 0.5s;
-}
-
-nav {
-    border-bottom: solid 2px var(--border-color);
-    background-color: var(--nav-bg-color);
-    transition: background-color ease 0.5s;
-}
-
-.navbar-nav .nav-link {
-    padding-right: 5px;
-}
-
-.navbar a {
-    color: var(--nav-link-color);
-}
-
-    .navbar a:visited {
-        color: var(--nav-link-color);
+@media (min-width: 992px) {
+    html {
+        font-size: 16px;
     }
 
-    .navbar a:hover {
-        color: var(--nav-link-color);
-        filter: brightness(70%);
+    .container {
+        max-width: 1200px;
     }
+}
 
-a, .nav-link {
+a {
     color: var(--link-color);
     transition: color ease 0.5s;
 }
 
-    a:hover, .nav-link:hover {
+    a:hover {
         color: var(--link-visited-color);
-        filter: brightness(70%);
+        filter: var(--darken-lighten);
     }
 
     a:visited {
         color: var(--link-visited-color);
     }
 
-    a h1, a h2, a h3, a h4, a h5, a h6 {
-        color: var(--link-color);
-    }
+.grecaptcha-badge {
+    visibility: hidden;
+}
 
 h1, h2, h3, h4, h5, h6 {
     color: var(--link-color);
+    transition: ease 0.5s color;
 }
 
 .text-danger {
@@ -65,57 +46,64 @@ h1, h2, h3, h4, h5, h6 {
 .form-group .form-control {
     background-color: var(--form-background-color);
     color: var(--text-color);
+    border-color: var(--border-color);
+    transition: background-color ease 0.5s, color ease 0.5s, border-color ease 0.5s;
 }
 
     .form-group .form-control:disabled, .form-group .form-control:not(select):read-only {
         background-color: var(--disabled-form-background-color);
         color: var(--disabled-form-text-color);
+        transition: background-color ease 0.5s, color ease 0.5s, border-color ease 0.5s;
     }
 
     .form-group .form-control:active:focus, .form-group .form-control:focus {
         border-color: var(--border-color);
         box-shadow: 0 0 0 0.2rem var(--border-color2);
+        transition: background-color ease 0.5s, color ease 0.5s, border-color ease 0.5s;
     }
 
 
-.form-group .btn.btn-primary {
-    color: var(--text-color2);
-    background-color: var(--button-color);
-    border-color: var(--border-color);
+.btn.btn-primary {
+    color: var(--text-color2) !important;
+    background-color: var(--button-color) !important;
+    border-color: var(--border-color) !important;
     transition: background-color ease 0.5s, border-color ease 0.5s;
 }
 
-    .form-group .btn.btn-primary:hover {
-        color: var(--text-color2);
-        background-color: var(--button-color);
-        border-color: var(--border-color);
-        filter: brightness(80%);
+    .btn.btn-primary:hover {
+        color: var(--text-color2) !important;
+        background-color: var(--button-color) !important;
+        border-color: var(--border-color) !important;
+        filter: var(--darken-lighten);
     }
 
-    .form-group .btn.btn-primary:active {
-        color: var(--text-color2);
-        filter: brightness(120%);
-        background-color: var(--button-color);
-        border-color: var(--border-color);
+    .btn.btn-primary:active {
+        color: var(--text-color2) !important;
+        filter: var(--lighten-darken);
+        background-color: var(--button-color) !important;
+        border-color: var(--border-color) !important;
     }
 
-        .form-group .btn.btn-primary:active:focus, .form-group .btn.btn-primary:focus {
-            box-shadow: 0 0 0 0.2rem var(--border-color2);
+        .btn.btn-primary:active:focus, .btn.btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem var(--border-color2) !important;
         }
 
 .page-item a.page-link {
     background-color: var(--bg-color);
     color: var(--text-color);
+    border-color: var(--border-color) !important;
     transition: color 0s, background-color 0s;
 }
 
     .page-item a.page-link:hover {
         color: var(--dark-link);
         transition: color 0s;
+        filter:var(--lighten-darken);
     }
 
     .page-item a.page-link:active {
         border-color: var(--border-color);
+        filter: var(--lighten-darken);
     }
 
         .page-item a.page-link:active:focus, .page-item a.page-link:focus {
@@ -127,32 +115,17 @@ h1, h2, h3, h4, h5, h6 {
     transition: background-color 0s;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: var(--text-color2);
-    background-color: var(--button-color);
-    border-color: var(--border-color);
-    transition: background-color ease 0.5s, border-color ease 0.5s;
-}
-
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    font-size: 14px;
-}
 
-@media (min-width: 1200px) {
-    html {
-        font-size: 16px;
-    }
-}
 
 .border-top {
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color) !important;
     transition: border-color ease 0.5s;
 }
 
 .border-bottom {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color) !important;
     transition: border-color ease 0.5s;
 }
 
@@ -204,11 +177,6 @@ blockquote {
     transition: border-color ease 0.5s;
 }
 
-.thumbnail {
-    width: 100%;
-    height: auto;
-}
-
 #post-preview {
     border: 1px solid var(--border-color);
     transition: border-color ease 0.5s;
@@ -219,6 +187,15 @@ blockquote {
 
     .post p {
         width: 100%;
+    }
+
+.post-article {
+    margin-bottom: 2em;
+}
+
+    .post-article i {
+        color: var(--link-color);
+        transition: color ease 0.5s;
     }
 
 span.ytplayer {
@@ -281,14 +258,11 @@ a.tag {
 
     a.tag:hover {
         text-decoration: none;
-        filter: brightness(120%);
+        filter: var(--lighten-darken);
     }
 
 .thumbnail-container {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;
+    height: 10em;
 }
 
     .thumbnail-container div {
@@ -316,6 +290,11 @@ p.group {
     text-align: center;
 }
 
+.comment {
+    border: 1px solid var(--border-color);
+    border-radius:20px;
+}
+
 .comment-children {
     margin-left: 5%;
 }
@@ -330,22 +309,15 @@ p.group {
 
 .verified {
     cursor: default;
+    color: var(--link-color);
 }
 
 #search-input {
     display: inline-block;
-    height: 31px;
+    height: 0;
     opacity: 0;
     padding: 0;
     margin: 0;
-}
-
-.nav-item a {
-    display: inline-block;
-}
-
-nav .tag-selector {
-    width: 250px;
 }
 
 .tag-selector {
@@ -364,6 +336,6 @@ nav .tag-selector {
 }
 
 hr {
-    border-color: var(--text-color);
+    border-color: var(--border-color);
     transition: border-color ease 0.5s;
 }

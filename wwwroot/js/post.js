@@ -1,9 +1,4 @@
-﻿function onSubmit(token) {
-    document.getElementsByName("ReCaptchaResponse")[0].value = token;
-    $("#replyForm").submit();
-}
-
-function moveCommentBox(comment) {
+﻿function moveCommentBox(comment) {
     var commentID = comment != null ? comment.id.replace("comment-", "") : null;
     var replyDiv = document.getElementById("replyDiv");
     if (replyDiv != null) {
@@ -16,6 +11,8 @@ function moveCommentBox(comment) {
 
         if (oldComment == null) {
             newReply.textContent = "Comment";
+            newReply.classList.add("m-3");
+
             document.getElementsByClassName("comments")[0].prepend(newReply);
         } else {
             newReply.textContent = "Reply";
@@ -33,9 +30,10 @@ function moveCommentBox(comment) {
         } else {
             $(comment).append(data).append(function () {
                 $("#replyForm").validate();
+                $("#replyForm button").html("Reply");
             });
         }
-        $(".recaptcha").click(function (e) {
+        $("#replyForm .recaptcha").click(function (e) {
             var form = $("#replyForm");
             if (!form.valid()) {
                 return;
@@ -46,7 +44,16 @@ function moveCommentBox(comment) {
             e.stopImmediatePropagation();
 
             grecaptcha.ready(function () {
-                grecaptcha.execute(siteKey, { action: "submit" }).then(onSubmit);
+                grecaptcha.execute(siteKey, { action: "submit" }).then(function (token) {
+                    document.getElementsByName("ReCaptchaResponse")[0].value = token;
+
+                    $("#replyForm").removeData("validator").removeData("unobtrusiveValidation");//remove the form validation
+                    $.validator.unobtrusive.parse($("#replyForm"));//add the form validation
+
+                    if ($("#replyForm").valid()) {
+                        $("#replyForm").submit();
+                    }
+                });
             });
         });
     });

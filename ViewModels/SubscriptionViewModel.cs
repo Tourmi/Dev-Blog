@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,5 +27,8 @@ namespace Dev_Blog.ViewModels
 
         [Display(Name = "Subscribe to", Description = "Choose the specific tags you wish to subscribe to.")]
         public string[] Tags { get; set; }
+        [Required]
+        [HiddenInput]
+        public string ReCaptchaResponse { get; set; }
     }
 }
