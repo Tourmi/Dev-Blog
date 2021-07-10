@@ -24,6 +24,7 @@ namespace Dev_Blog.ViewModels
         public string Content { get; set; }
         public bool Publish { get; set; } = true;
         public bool Schedule { get; set; } = false;
+        public bool IsAboutPage { get; set; }
         [DisplayName("Publish on")]
         public DateTime? PublishDate { get; set; }
         public ICollection<string> Tags { get; set; } = new HashSet<string>();

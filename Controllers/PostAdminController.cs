@@ -108,7 +108,7 @@ namespace Dev_Blog.Controllers
                 DateModified = null,
                 DatePublished = null,
                 Title = viewModel.Title,
-                IsAboutPage = false
+                IsAboutPage = viewModel.IsAboutPage
             };
 
             post.Tags = Tag.ToPostTags(context, post, viewModel.Tags);
@@ -168,6 +168,7 @@ namespace Dev_Blog.Controllers
                 Content = post.Content,
                 Publish = post.DatePublished != null,
                 Schedule = false,
+                IsAboutPage = post.IsAboutPage,
                 PublishDate = post.DatePublished < DateTime.Now ? null : post.DatePublished,
                 AutoGenerateStub = false,
                 Stub = post.Stub,
@@ -242,6 +243,8 @@ namespace Dev_Blog.Controllers
                 {
                     post.DatePublished = null;
                 }
+
+                post.IsAboutPage = viewModel.IsAboutPage;
 
                 context.SaveChanges();
 

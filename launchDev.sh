@@ -1,1 +1,1 @@
-dotnet run --launch-profile Dev_Blog
+dotnet run -c Debug --launch-profile Dev_Blog
