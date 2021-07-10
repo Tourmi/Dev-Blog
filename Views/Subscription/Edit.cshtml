@@ -13,7 +13,7 @@
         <form id="subscribeForm" asp-action="Edit" asp-route-token="@Model.Token">
             <partial name="_SubscriptionViewModelEditor" model="Model" />
 
-            <div class="form-group">
+            <div class="form-group recaptcha">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             <p class="small">

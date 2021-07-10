@@ -203,6 +203,7 @@ namespace Dev_Blog.Controllers
 
             if (!ModelState.IsValid)
             {
+                ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
                 return View(viewModel);
             }
 
@@ -211,6 +212,8 @@ namespace Dev_Blog.Controllers
             if (sub == null || sub.Email != viewModel.Email)
             {
                 ModelState.AddModelError("", "The email validation token was invalid");
+                ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
+                return View(viewModel);
             }
 
             sub.SubscribedToAll = viewModel.SubscribedToAll;
