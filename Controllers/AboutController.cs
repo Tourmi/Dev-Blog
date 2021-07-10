@@ -29,7 +29,7 @@ namespace Dev_Blog.Controllers
         {
             logger.LogTrace("GET: About, Index");
 
-            Post post = context.Posts.Where(p => p.IsAboutPage).Include(p => p.Author).Include(p => p.Tags).FirstOrDefault();
+            Post post = context.Posts.Where(p => p.IsAboutPage && p.DateDeleted == null).OrderByDescending(p => p.DateCreated).Include(p => p.Author).Include(p => p.Tags).FirstOrDefault();
 
             return View(post);
         }
