@@ -39,7 +39,7 @@
     --form-background-color: #e1ffec;
     --disabled-form-background-color: #92b6ac;
     --disabled-form-text-color: #444;
-    --lighten-darken: brightness(70%);
+    --lighten-darken: brightness(80%);
     --darken-lighten: brightness(130%);
 }
 

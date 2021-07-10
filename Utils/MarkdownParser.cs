@@ -257,7 +257,7 @@ namespace Dev_Blog.Utils
                 newMarkdown = newMarkdown.Remove(index, toRemove);
 
                 string src = $"{match.Groups[4].Value.EscapeImportantMarkdownChars()}";
-                string alt = $" alt=\"{match.Groups[3].Value.EscapeImportantMarkdownChars()}\"";
+                string alt = $" aria-label=\"{match.Groups[3].Value.EscapeImportantMarkdownChars()}\"";
                 string title = $" title=\"{match.Groups[3].Value.EscapeImportantMarkdownChars()}\"";
 
                 newMarkdown = newMarkdown.Insert(index, $"<i class=\"{src}\"{alt}{title}></i>");

@@ -91,16 +91,19 @@ h1, h2, h3, h4, h5, h6 {
 .page-item a.page-link {
     background-color: var(--bg-color);
     color: var(--text-color);
+    border-color: var(--border-color) !important;
     transition: color 0s, background-color 0s;
 }
 
     .page-item a.page-link:hover {
         color: var(--dark-link);
         transition: color 0s;
+        filter:var(--lighten-darken);
     }
 
     .page-item a.page-link:active {
         border-color: var(--border-color);
+        filter: var(--lighten-darken);
     }
 
         .page-item a.page-link:active:focus, .page-item a.page-link:focus {
