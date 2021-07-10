@@ -38,8 +38,7 @@ namespace Dev_Blog.Services
                 Timeout = 100000
             };
 
-            //TODO : Change actual MailAddress to real email address
-            MailMessage message = new MailMessage(new MailAddress(Options.EmailSenderEmail, Options.EmailSenderDisplayName), new MailAddress("domino_b10@hotmail.com"))
+            MailMessage message = new MailMessage(new MailAddress(Options.EmailSenderEmail, Options.EmailSenderDisplayName), new MailAddress(model.To))
             {
                 Subject = model.Subject,
                 Body = model.Body,

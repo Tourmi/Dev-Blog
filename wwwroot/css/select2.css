@@ -10,6 +10,10 @@
     border-color: var(--border-color);
 }
 
+.select2.select2-container {
+    margin-bottom: 3px;
+}
+
 .select2-container .select2-selection {
     background-color: var(--form-background-color);
     color: var(--text-color);

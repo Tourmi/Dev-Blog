@@ -7,12 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\DisplayTemplates\**" />
     <Compile Remove="wwwroot\audio\blogpost\**" />
     <Compile Remove="wwwroot\img\blogpost\**" />
+    <Content Remove="Views\Shared\DisplayTemplates\**" />
     <Content Remove="wwwroot\audio\blogpost\**" />
     <Content Remove="wwwroot\img\blogpost\**" />
+    <EmbeddedResource Remove="Views\Shared\DisplayTemplates\**" />
     <EmbeddedResource Remove="wwwroot\audio\blogpost\**" />
     <EmbeddedResource Remove="wwwroot\img\blogpost\**" />
+    <None Remove="Views\Shared\DisplayTemplates\**" />
     <None Remove="wwwroot\audio\blogpost\**" />
     <None Remove="wwwroot\img\blogpost\**" />
   </ItemGroup>
@@ -58,7 +62,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\Shared\DisplayTemplates\" />
       <Folder Include="wwwroot\audio\" />
     </ItemGroup>
 
