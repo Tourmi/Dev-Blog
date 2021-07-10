@@ -398,7 +398,7 @@ namespace Dev_Blog.Utils
                     continue;
                 }
 
-                string newLine = line.Substring(match.Groups[1].Value.Length);
+                string newLine = line[match.Groups[1].Value.Length..];
                 if (itemTag != null)
                 {
                     newLine = $"<{itemTag}>{newLine}</{itemTag}>";
@@ -432,12 +432,12 @@ namespace Dev_Blog.Utils
             {
                 if (line.StartsWith(currHeader))
                 {
-                    line = line.Substring(currHeader.Length);
+                    line = line[currHeader.Length..];
 
                     return $"</p><h{currHeader.Length - 1}>{line}</h{currHeader.Length - 1}><p>";
                 }
                 //Remove one #
-                currHeader = currHeader.Substring(1);
+                currHeader = currHeader[1..];
             } while (currHeader.Length > 1);
 
             return line;
