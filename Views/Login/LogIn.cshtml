@@ -56,7 +56,12 @@
                 grecaptcha.ready(function () {
                     grecaptcha.execute(siteKey, { action: "submit" }).then(function (token) {
                         document.getElementsByName("ReCaptchaResponse")[0].value = token;
-                        $("#loginForm").submit();
+                        $("#loginForm").removeData("validator").removeData("unobtrusiveValidation");//remove the form validation
+                        $.validator.unobtrusive.parse($("#loginForm"));//add the form validation
+
+                        if ($("#loginForm").valid()) {
+                            $("#loginForm").submit();
+                        }
                     });
                 });
             });

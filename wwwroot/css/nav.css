@@ -16,7 +16,7 @@
 
         .navbar .nav-link:hover {
             color: var(--nav-link-color);
-            filter: brightness(70%);
+            filter: var(--darken-lighten);
         }
 
     .navbar a.navbar-brand {

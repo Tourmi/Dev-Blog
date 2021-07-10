@@ -12,7 +12,13 @@
         grecaptcha.ready(function () {
             grecaptcha.execute(siteKey, { action: "submit" }).then(function (token) {
                 document.getElementsByName("ReCaptchaResponse")[0].value = token;
-                $("#subscribeForm").submit();
+
+                $("#subscribeForm").removeData("validator").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse($("#subscribeForm"));
+
+                if ($("#subscribeForm").valid()) {
+                    $("#subscribeForm").submit();
+                }
             });
         });
     });

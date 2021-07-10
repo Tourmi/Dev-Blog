@@ -124,6 +124,7 @@ namespace Dev_Blog.Controllers
             {
                 if (existing.ValidatedEmail)
                 {
+                    ViewData["recaptcha-public-key"] = reCaptchaConfig.Value.ReCaptchaPublicKey;
                     ModelState.AddModelError("Email", "You're already subscribed!");
 
                     return View(viewModel);
