@@ -1,7 +1,6 @@
 ﻿.navbar .select2 {
     width: unset !important;
     flex-grow: 100;
-
 }
 
 .select2 {
@@ -11,7 +10,7 @@
 }
 
 .select2.select2-container {
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 .select2-container .select2-selection {
