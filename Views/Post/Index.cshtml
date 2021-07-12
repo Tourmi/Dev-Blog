@@ -4,6 +4,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool showPagination = Model.TotalPages > 1;
+    ViewData["ShowMetaLogo"] = true;
+}
+
+@section Meta {
+    <meta name="description" content="Tourmi.dev is a blog made by Tourmi to document his experiences in (video game) development and music." />
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="@(Dev_Blog.Utils.Constants.PublicUrl)" />
+    <meta property="og:title" content="Tourmi.dev Index" />
+    <meta property="og:description" content="Tourmi.dev is a blog made by Tourmi to document his experiences in (video game) development and music." />
 }
 
 <div class="row">
