@@ -18,6 +18,7 @@
     <hr />
     <div class="post" id="@Model.ID">
         <img alt="Thumbnail for article '@Model.Title'" src="/@Model.ThumbnailPath"/>
+        <br />
         @Html.Raw(MarkdownParser.ParseString(Model.Content))
     </div>
     <footer>
