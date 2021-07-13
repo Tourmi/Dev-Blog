@@ -210,7 +210,7 @@ namespace Dev_Blog.Utils
         private static string parseIndirectUrls(string markdown)
         {
             string newMarkdown = markdown;
-            Regex regex = new Regex(@"([^\\]|^)(\[(.*)\]\((.*?)( &quot;?(.*?)&quot;?)?\))");
+            Regex regex = new Regex(@"([^\\]|^)(\[(.*?)\]\((.*?)( &quot;?(.*?)&quot;?)?\))");
             Match match = regex.Match(newMarkdown);
             while (match.Success)
             {
