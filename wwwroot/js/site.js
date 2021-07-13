@@ -10,7 +10,7 @@ const changePalette = (id) =>
         $(".fa-lightbulb").toggleClass("far").toggleClass("fas")
     }
 
-    setCookie("paletteId", id)
+    setCookie("paletteId", id, 365)
 }
 
 const select2Select = () => $(".tag-selector").select2({

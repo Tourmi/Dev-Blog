@@ -210,7 +210,15 @@ namespace Dev_Blog.Controllers
                 }
 
                 post.Tags = Tag.ToPostTags(context, post, viewModel.Tags);
-                post.DateModified = now;
+                bool isJustPublished = !post.Published && viewModel.Publish;
+                if (isJustPublished)
+                {
+                    post.DateModified = null;
+                }
+                else
+                {
+                    post.DateModified = now;
+                }
 
                 post.Content = viewModel.Content;
                 post.Title = viewModel.Title;
