@@ -38,7 +38,7 @@
 
 
 <script>
-    var baseURL = ""
+    var baseURL = "/"
 
     document.addEventListener('DOMContentLoaded', () => {
         $("#search-button").click(function () {
@@ -46,7 +46,7 @@
             if ($("#search-input").val() != "") {
                 query = "?tags=" + $("#search-input").val()
             }
-            document.location = baseURL + query
+            window.location = baseURL + query
         })
 
         $("#change-theme").click(function () {
