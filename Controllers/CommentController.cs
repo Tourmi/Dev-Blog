@@ -124,8 +124,9 @@ namespace Dev_Blog.Controllers
                 Content = viewModel.Content,
                 Name = author?.DisplayName ?? viewModel.Name,
                 Email = author?.Email ?? viewModel.Email,
-                IpAddress = HttpContext.Connection.RemoteIpAddress.ToString()
+                IpAddress = Request.Headers["x-forwarded-for"].ToString()
             };
+            logger.LogInformation(string.Join("\n", Request.Headers.Select(e => e.Key + "========" + e.Value)));
 
             context.Add(comment);
             await context.SaveChangesAsync();
