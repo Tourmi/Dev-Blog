@@ -126,8 +126,6 @@ namespace Dev_Blog.Controllers
                 Email = author?.Email ?? viewModel.Email,
                 IpAddress = Request.Headers["x-forwarded-for"].ToString()
             };
-            logger.LogInformation($"x-forwarded-for: {Request.Headers["x-forwarded-for"]}");
-            logger.LogInformation($"remote ip addrs: {Request.HttpContext.Connection.RemoteIpAddress}");
 
             context.Add(comment);
             await context.SaveChangesAsync();
