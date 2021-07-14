@@ -28,7 +28,7 @@ else if (!Model.Deleted)
                 }
             </div>
             <div class="col-4 ml-auto text-right">
-                <time class="timeago" datetime="@Model.DateCreated.ToString("s")" title="@Model.DateCreated.ToString("yyyy/MM/dd HH:mm zzz")">@Model.DateCreated.ToString("f")</time>
+                <time class="timeago" datetime="@Model.DateCreated.ToString("f")" title="@Model.DateCreated.ToString("f")">@Model.DateCreated.ToString("f")</time>
             </div>
             @if (User.IsInRole("Admin") || Model.Post.Author.UserName == User.Identity.Name)
             {
