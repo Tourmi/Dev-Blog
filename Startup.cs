@@ -106,10 +106,10 @@ namespace Dev_Blog
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
-                ForwardedHeaders = ForwardedHeaders.All,
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto,
                 RequireHeaderSymmetry = false,
                 ForwardLimit = null,
-                KnownNetworks = { new IPNetwork(IPAddress.Parse("127.0.0.1"), 31) }
+                KnownNetworks = { new IPNetwork(IPAddress.Parse("127.0.0.1"), 32) }
             });
 
             app.UseStaticFiles();
