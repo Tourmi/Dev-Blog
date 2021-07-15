@@ -11,15 +11,20 @@ namespace Dev_Blog.Utils
         public static string RawPreview(this Post post, int maxLength = 500)
         {
             string raw = post.RawText();
+
             int newParagraphIndex = raw.IndexOf("\n\n");
             if (newParagraphIndex < 0)
             {
+                newParagraphIndex = raw.Length;
                 if (raw.Length <= maxLength)
                 {
                     return raw.Trim();
                 }
+            }
 
-                newParagraphIndex = raw.Length;
+            if (newParagraphIndex < maxLength)
+            {
+                return raw[0..newParagraphIndex];
             }
 
             int lastWordIndex = raw.Substring(0, Math.Min(newParagraphIndex, maxLength)).LastIndexOf(" ");
