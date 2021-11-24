@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Dev_Blog.Utils
 {
@@ -11,6 +12,8 @@ namespace Dev_Blog.Utils
         public static string RawPreview(this Post post, int maxLength = 500)
         {
             string raw = post.RawText();
+
+            raw = HttpUtility.HtmlDecode(raw);
 
             int newParagraphIndex = raw.IndexOf("\n\n");
             if (newParagraphIndex < 0)
