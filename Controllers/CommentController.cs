@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Dev_Blog.Config;
+﻿using Dev_Blog.Config;
 using Dev_Blog.Data;
 using Dev_Blog.Models;
 using Dev_Blog.Utils;
 using Dev_Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using reCAPTCHA.AspNetCore.Attributes;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Dev_Blog.Controllers
 {
@@ -124,13 +121,13 @@ namespace Dev_Blog.Controllers
                 Content = viewModel.Content,
                 Name = author?.DisplayName ?? viewModel.Name,
                 Email = author?.Email ?? viewModel.Email,
-                IpAddress = Request.Headers["x-forwarded-for"].ToString()
+                IpAddress = Request.Headers["x-real-ip"].ToString()
             };
 
             context.Add(comment);
             await context.SaveChangesAsync();
 
-            return Redirect(Url.Action("Details", "Post", new { postStub = parentPost.Stub}, null, null, $"comment-{comment.ID}"));
+            return Redirect(Url.Action("Details", "Post", new { postStub = parentPost.Stub }, null, null, $"comment-{comment.ID}"));
         }
 
         [Route("comment/delete/{id}")]

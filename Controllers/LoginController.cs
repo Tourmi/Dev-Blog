@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Dev_Blog.Config;
-using Dev_Blog.Data;
+﻿using Dev_Blog.Config;
 using Dev_Blog.Models;
 using Dev_Blog.Utils;
 using Dev_Blog.ViewModels;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 
 namespace Dev_Blog.Controllers
 {
@@ -66,12 +59,12 @@ namespace Dev_Blog.Controllers
 
             if (result.IsLockedOut)
             {
-                logger.LogWarning("Attempt to log into locked account {Username} with ip {IP}", loginViewModel.Username, HttpContext.Connection.RemoteIpAddress.ToString());
+                logger.LogWarning("Attempt to log into locked account {Username} with ip {IP}", loginViewModel.Username, Request.Headers["x-real-ip"].ToString());
                 ModelState.AddModelError("", "Too many attempts, please try again in a few minutes.");
                 return View(loginViewModel);
             }
 
-            logger.LogWarning("Invalid login attempt for username {Username} and ip {IP}", loginViewModel.Username, HttpContext.Connection.RemoteIpAddress.ToString());
+            logger.LogWarning("Invalid login attempt for username {Username} and ip {IP}", loginViewModel.Username, Request.Headers["x-real-ip"].ToString());
             ModelState.AddModelError("", "Invalid username or password!");
             return View(loginViewModel);
         }
